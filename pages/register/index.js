@@ -26,6 +26,8 @@ export default function Register() {
             .required('Password perlu di isi')
             .min(6, 'Password paling sedikit harus 6 karakter')
             .max(40, 'Password hanya bisa maksimal 40 karakter'),
+        role: Yup.string()
+            .required('Role user perlu di pilih'),
         nik: Yup.string()
             .required('Nomor Induk Kependudukan perlu di isi')
             .min(16, 'Jumlah NIK 16 angka')

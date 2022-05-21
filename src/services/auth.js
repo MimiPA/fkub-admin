@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import jwt from 'jsonwebtoken';
 import TokenService from './tokenServices';
 import api from './api';
+import Swal from "sweetalert2";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -11,7 +12,7 @@ const register = data => {
         ...data,
     };
 
-    const { role = 'User', email, password, nik, nama_depan, nama_belakang, jenis_kelamin, agama, telepon, tempat_lahir, tanggal_lahir, alamat, rt, rw, kecamatan, kelurahan } = user;
+    const { role, email, password, nik, nama_depan, nama_belakang, jenis_kelamin, agama, telepon, tempat_lahir, tanggal_lahir, alamat, rt, rw, kecamatan, kelurahan } = user;
     return axios.post(API_URL + '/register', {
         email,
         password,

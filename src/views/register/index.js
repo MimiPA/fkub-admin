@@ -30,6 +30,15 @@ export default function RegisterView({
         "Kristen"
     ];
 
+    const roles = [
+        'Admin',
+        'User',
+        'PMPTSP',
+        'FKUB',
+        'Kemenag',
+        'Dinas Tata Ruang'
+    ];
+
     return (
         <div className='relative pb-12 md:pb-24 pt-6 md:pt-12'>
             <header className='flex space-between items-center m-auto w-9/10'>
@@ -83,6 +92,17 @@ export default function RegisterView({
                             />
                         </div>
                         <p className='text-xs text-error self-end mr-2 mt-1'>{errors.password?.message}</p>
+                    </div>
+
+                    <div className='input-container mb-4 flex flex-col'>
+                        <div className='flex'>
+                            <img src='/icons/user-role.svg' className='bg-primary w-12 px-4 rounded-l-md' />
+                            <select className={`bg-transparent h-12 w-full pl-6 rounded-r-md border-2 pr-6 focus:outline-none ${errors.role ? 'border-error' : 'border-primary'}`} {...register("role")}>
+                                {roles.map((role) => (
+                                    <option value={role}>{role}</option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
 
                     <div className='mt-2 mb-4 flex flex-col bg-secondary'>

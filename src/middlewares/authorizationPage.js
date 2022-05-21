@@ -1,65 +1,34 @@
-import React from 'react';
+import cookies from "next-cookies";
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'LOGIN':
-            localStorage.setItem('user', JSON.stringify(action.payload));
-            return {
-                isAuthenticated: true,
-                user: action.payload,
-            };
-        case 'LOGOUT':
-            localStorage.clear();
-            return state;
-        default:
-            return state;
-    }
-};
-
-const initialState = {
-    isAuthenticated: false,
-    user: {
-        nik: null,
-        nama_depan: null,
-        nama_belakang: null,
-        jenis_kelamin: null,
-        agama: null,
-        telepon: null,
-        tempat_lahir: null,
-        tanggal_lahir: null,
-        alamat: null,
-        rt: null,
-        rw: null,
-        kelurahan: null,
-        kecamatan: null,
-        foto: null,
-        'Master_account.id': null,
-        'Master_account.email': null,
-    },
-};
-
-var AuthContext = React.createContext();
-
-function getLocalStorage() {
-    if (typeof window !== 'undefined') {
-        if (localStorage.getItem('user')) {
-            return { isAuthenticated: false, user: JSON.parse(localStorage.getItem('user')) };
+//Middleware for Protected Pages
+export function authPage(ctx) {
+    return new Promise(resolve => {
+        const { accessTokenFKUBMain, refreshTokenFKUBMain } = cookies(ctx);
+        if (!refreshTokenFKUBMain && !accessTokenFKUBMain) {
+            return ctx.res
+                .writeHead(302, {
+                    Location: '/login',
+                })
+                .end();
         }
-        else {
-            return initialState;
-        }
-    }
+        resolve({
+            accessTokenFKUBMain,
+            refreshTokenFKUBMain
+        });
+    });
 }
 
-function UserProvider({ children }) {
-    const [state, dispatch] = React.useReducer(reducer, getLocalStorage() || initialState);
-
-    return (
-        <AuthContext.Provider value={{ state, dispatch }}>
-            {children}
-        </AuthContext.Provider>
-    );
+//Middleware for Public Pages
+export function unauthPage(ctx) {
+    return new Promise(resolve => {
+        const { refreshTokenFKUBMain } = cookies(ctx);
+        if (refreshTokenFKUBMain) {
+            return ctx.res
+                .writeHead(302, {
+                    Location: '/',
+                })
+                .end();
+        }
+        resolve('unauthorized');
+    });
 }
-
-export default AuthContext;
-export { UserProvider };

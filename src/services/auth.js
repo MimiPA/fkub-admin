@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import jwt from 'jsonwebtoken';
 import TokenService from './tokenServices';
 import api from './api';
-import Swal from "sweetalert2";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -34,7 +33,7 @@ const register = data => {
 };
 
 const login = async data => {
-    const { email, password, role = 'User' } = data;
+    const { email, password, role } = data;
 
     return axios.post(API_URL + '/login', {
         email,

@@ -18,6 +18,15 @@ export default function LoginView({
         setShowPassword(showPassword => !showPassword);
     };
 
+    const roles = [
+        'Admin',
+        'User',
+        'PMPTSP',
+        'FKUB',
+        'Kemenag',
+        'Dinas Tata Ruang'
+    ];
+
     return (
         <div className='relative pb-12 md:pb-8 pt-6 md:pt-12'>
             <header className='m-auto w-9/10'>
@@ -28,7 +37,7 @@ export default function LoginView({
 
             <main className='register mt-12 md:mt-8 m-auto w-9/10 sm:w-7/10 md:w-5/10 lg:w-5/10 xl:w-5/10 2-xl:w-2/10'>
                 <h1 className='text-secondary text-4xl font-bold text-center mb-12'>Welcome</h1>
-                <p className='text-error tex-center'>{errorService ? errorService : ''}</p>
+                <p className='text-error text-center'>{errorService ? errorService : ''}</p>
 
                 <form className='mt-8 flex flex-col justify-between' onSubmit={handleSubmit(onSubmit)}>
                     <div className='input-container mb-6 flex flex-col'>
@@ -56,6 +65,14 @@ export default function LoginView({
                             />
                         </div>
                         <p className='text-xs text-error self-end mr-2 mt-1'>{errors.password?.message}</p>
+                    </div>
+
+                    <div className='input-container mb-6 flex flex-col'>
+                        <select className={`bg-transparent h-12 w-full pl-6 border-b-2 border-primary placeholder-primary font-semibold focus:rounded-md focus:outline-none focus:border-b-0 focus:ring-2 focus:ring-primary ${errors.role ? 'border-error' : 'border-primary'}`} {...register("role")}>
+                            {roles.map((role) => (
+                                <option value={role}>{role}</option>
+                            ))}
+                        </select>
                     </div>
 
                     {isLoading ?

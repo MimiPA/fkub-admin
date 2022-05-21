@@ -28,6 +28,7 @@ export default function Login() {
     const validationSchema = Yup.object().shape({
         email: Yup.string().required('Email harus di isi').email('Email tidak valid'),
         password: Yup.string().required('Password harus di isi').min(6, 'Password minimal paling sedikit 6 karakter'),
+        role: Yup.string().required('Role user perlu di pilih'),
     });
 
     const {

@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps, router }) {
   if (
     router.pathname === '/' ||
     router.pathname.startsWith('/profile') ||
+    router.pathname.startsWith('/user') ||
     router.pathname.startsWith('/bangun_baru') ||
     router.pathname.startsWith('/renovasi') ||
     router.pathname.startsWith('/list_pengajuan') ||

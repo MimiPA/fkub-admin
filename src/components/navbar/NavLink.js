@@ -96,7 +96,7 @@ const SidebarDropdown = ({
 
       <div className={`pl-8 ${!open ? "max-h-0" : `max-h-96`} h-auto overflow-hidden transition-all duration-200 ease-in-out`} >
         {!hide &&
-          item.map(({ icon, title, item, href }) => (
+          item.map(({ icon, title, item, href, active }) => (
             <NavLink
               icon={icon}
               title={title}
@@ -104,6 +104,7 @@ const SidebarDropdown = ({
               hide={hide}
               item={item}
               href={href}
+              active={active}
             />
           ))}
       </div>

@@ -18,6 +18,13 @@ const navItem = [
         active: "router.pathname === '/'",
     },
     {
+        icon: "/icons/user-management-icon",
+        title: "User Management",
+        href: "/user",
+        main: true,
+        active: "router.pathname === '/'",
+    },
+    {
         icon: "/icons/pengajuan",
         title: "Pengajuan Proposal",
         main: true,
@@ -64,16 +71,6 @@ export default function Navbar() {
             });
         });
     }, []);
-
-    const handleShow = () => {
-        setShow(!show);
-        if (show === true) {
-            document.body.style.overflow = 'unset';
-        } else {
-            document.body.style.overflow = 'hidden';
-        }
-        // Unsets Background Scrolling to use when SideDrawer/Modal is closed
-    };
 
     return (
         <>
@@ -151,7 +148,7 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {navItem.map(({ icon, title, item, main, href }) => (
+                {navItem.map(({ icon, title, item, main, href, active }) => (
                     <NavLink
                         icon={icon}
                         title={title}
@@ -160,6 +157,7 @@ export default function Navbar() {
                         item={item}
                         main={main}
                         href={href}
+                        active={active}
                         setOpen={setOpen}
                     />
                 ))}

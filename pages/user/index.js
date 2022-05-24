@@ -16,7 +16,7 @@ export default function ListUser() {
                 <div className="grid p-5 justify-items-stretch max-w-full">
                     <Head>
                         <title>FKUB - Users</title>
-                        <meta property="og:parents" content="users" key="users" />
+                        <meta property="og:users" content="users" key="users" />
                     </Head>
 
                     <main>

@@ -3,8 +3,13 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import Image from "next/image";
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from "next/router";
+import { Dialog, Transition } from '@headlessui/react';
+
+// import { useForm } from 'react-hook-form';
+// import { yupResolver } from '@hookform/resolvers/yup';
+// import * as Yup from 'yup';
 
 import api from '../../../src/services/api';
 // import { authPage } from '../../src/middlewares/authorizationPage';
@@ -67,19 +72,50 @@ export default function DetailUser() {
             });
     }, []);
 
+    let [isOpen, setIsOpen] = useState(false);
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function changeStatus() {
+        api
+            .put(`/user/admin/${id}/status?status=${data.Master_account.is_active}`)
+            .then(res => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: res.data.message,
+                }).then(() => (window.location.href = '/user/'));
+            })
+            .catch(err => {
+                console.log(err);
+                setStatus(null);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    text: 'Tidak Dapat Mengubah Status. Mohon Coba Lagi.',
+                }).then(() => (window.location.href = '/user/'));
+            });
+    }
+
     const StatusAkun = ({ is_active }) => {
         if (is_active == "Disable") {
             return (
-                <p className="text-lg font-semibold text-rose-500">
+                <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#ffadad] rounded-sm bg-rose-500 hover:bg-[#ffadad] text-white text-lg font-semibold">
                     {is_active}
-                </p>
+                </button>
             );
         }
-        else {
+        else if (is_active == "Enable") {
             return (
-                <p className="text-md font-semibold text-emerald-500">
+                <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
                     {is_active}
-                </p>
+                </button>
             );
         }
     };
@@ -271,6 +307,69 @@ export default function DetailUser() {
                     </main>
                 </div>
             </div>
+
+
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-center text-lg font-medium leading-6 text-black"
+                                    >
+                                        Mengubah Status Akun
+                                    </Dialog.Title>
+                                    <div className="mt-2">
+                                        <p className="text-sm text-gray-500">
+                                            Apakah Anda Yakin Ingin Mengubah Status Akun User Berikut ?
+                                        </p>
+                                    </div>
+
+                                    <div className="flex justify-between mt-6">
+                                        <button
+                                            type="button"
+                                            className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+                                            onClick={closeModal}
+                                        >
+                                            Tidak
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                                            onClick={changeStatus}
+                                        >
+                                            Yaa
+                                        </button>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </>
     );
-}
+};

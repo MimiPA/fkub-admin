@@ -33,8 +33,13 @@ const initialState = {
         kelurahan: null,
         kecamatan: null,
         foto: null,
-        'Master_account.id': null,
-        'Master_account.email': null,
+        Master_account: {
+            id: null,
+            email: null,
+            Master_role: {
+                role: null,
+            }
+        },
     },
 };
 

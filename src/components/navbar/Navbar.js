@@ -26,7 +26,7 @@ const navItem = [
     },
     {
         icon: "/icons/pengajuan",
-        title: "Pengajuan Proposal",
+        title: "List Proposal",
         main: true,
         item: [
             { title: "Bangun Baru", href: "/bangun_baru", active: "router.pathname.startsWith('/bangun_baru')" },
@@ -50,7 +50,6 @@ const navItem = [
 ];
 
 export default function Navbar() {
-    const [show, setShow] = useState(false);
     const [open, setOpen] = useState(false);
     const { state, dispatch } = useContext(AuthContext);
     const router = useRouter();
@@ -71,6 +70,24 @@ export default function Navbar() {
             });
         });
     }, []);
+
+    function MenuTerbatas() {
+        return (
+            navItem.map(({ icon, title, item, main, href, active }) => (
+                <NavLink
+                    icon={icon}
+                    title={title}
+                    key={title}
+                    hide={!open}
+                    item={item}
+                    main={main}
+                    href={href}
+                    active={active}
+                    setOpen={setOpen}
+                />
+            ))
+        );
+    }
 
     return (
         <>
@@ -148,19 +165,7 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {navItem.map(({ icon, title, item, main, href, active }) => (
-                    <NavLink
-                        icon={icon}
-                        title={title}
-                        key={title}
-                        hide={!open}
-                        item={item}
-                        main={main}
-                        href={href}
-                        active={active}
-                        setOpen={setOpen}
-                    />
-                ))}
+                <MenuTerbatas />
             </nav>
         </>
     );

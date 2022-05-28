@@ -20,7 +20,6 @@ export default function LoginView({
 
     const roles = [
         'Admin',
-        'User',
         'PMPTSP',
         'FKUB',
         'Kemenag',

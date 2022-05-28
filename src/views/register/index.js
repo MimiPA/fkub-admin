@@ -32,7 +32,6 @@ export default function RegisterView({
 
     const roles = [
         'Admin',
-        'User',
         'PMPTSP',
         'FKUB',
         'Kemenag',

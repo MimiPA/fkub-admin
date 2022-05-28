@@ -341,7 +341,7 @@ export default function DetailUser() {
                                     >
                                         Mengubah Status Akun
                                     </Dialog.Title>
-                                    <div className="mt-2">
+                                    <div className="mt-4">
                                         <p className="text-sm text-gray-500">
                                             Apakah Anda Yakin Ingin Mengubah Status Akun User Berikut ?
                                         </p>

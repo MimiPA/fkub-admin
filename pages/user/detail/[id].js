@@ -7,17 +7,13 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from "next/router";
 import { Dialog, Transition } from '@headlessui/react';
 
-// import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import * as Yup from 'yup';
-
 import api from '../../../src/services/api';
-// import { authPage } from '../../src/middlewares/authorizationPage';
+import { authPage } from '../../../src/middlewares/authorizationPage';
 
-// export async function getServerSideProps(ctx) {
-//     await authPage(ctx);
-//     return { props: {} };
-// }
+export async function getServerSideProps(ctx) {
+    await authPage(ctx);
+    return { props: {} };
+}
 
 export default function DetailUser() {
     const [data, setData] = useState({

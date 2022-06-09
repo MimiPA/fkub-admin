@@ -60,6 +60,11 @@ const columns = [
         sortable: true,
     },
     {
+        name: "Jenis Pembangunan",
+        selector: (row) => row.jenis_pembangunan,
+        sortable: true,
+    },
+    {
         name: "Alamat",
         selector: (row) => row.alamat,
         sortable: true,
@@ -69,7 +74,7 @@ const columns = [
         selector: (row) => row.surat_permohonan,
         cell: (row) => (
             <Link href={`${row.surat_permohonan}`}>
-                <button type="button" onClick={`window.open(${row.surat_permohonan}, '_blank')`} classname="text-white bg-rose-600 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800">
+                <button type="button" onClick={`window.open(${row.surat_permohonan}, '_blank')`} >
                     <svg className='w-5 h-5' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M88 304H80V256H88C101.3 256 112 266.7 112 280C112 293.3 101.3 304 88 304zM192 256H200C208.8 256 216 263.2 216 272V336C216 344.8 208.8 352 200 352H192V256zM224 0V128C224 145.7 238.3 160 256 160H384V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64C0 28.65 28.65 0 64 0H224zM64 224C55.16 224 48 231.2 48 240V368C48 376.8 55.16 384 64 384C72.84 384 80 376.8 80 368V336H88C118.9 336 144 310.9 144 280C144 249.1 118.9 224 88 224H64zM160 368C160 376.8 167.2 384 176 384H200C226.5 384 248 362.5 248 336V272C248 245.5 226.5 224 200 224H176C167.2 224 160 231.2 160 240V368zM288 224C279.2 224 272 231.2 272 240V368C272 376.8 279.2 384 288 384C296.8 384 304 376.8 304 368V320H336C344.8 320 352 312.8 352 304C352 295.2 344.8 288 336 288H304V256H336C344.8 256 352 248.8 352 240C352 231.2 344.8 224 336 224H288zM256 0L384 128H256V0z" fill='salmon' /></svg>
                 </button>
             </Link>
@@ -88,7 +93,7 @@ const columns = [
     {
         button: true,
         cell: (row) => (
-            <Link href={`/pmptsp/daftar_renovasi/detail/${row.id}`}>
+            <Link href={`/pmptsp/daftar_pengajuan/${row.id}`}>
                 <button className="w-[44px] h-[22px] border border-[#ADC6FF] rounded-sm bg-[#F0F5FF] hover:bg-[#ADC6FF] text-[#2F54EB] ">
                     Detail
                 </button>
@@ -114,11 +119,11 @@ const FilterComponent = ({ filterText, onFilter }) => (
     </>
 );
 
-export default function ListRenovasi() {
+export default function ListPengajuan() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        api.get('/proposal/pmptsp/list?jenis_pembangunan=Bangun Baru').then(res => {
+        api.get('/proposal/pmptsp/list').then(res => {
             setData(res.data.data);
         }).catch((err) => console.log(err));
     }, []);
@@ -149,7 +154,7 @@ export default function ListRenovasi() {
         <>
             <div>
                 <DataTable
-                    title="Daftar Proposal Permohonan Bangun Baru"
+                    title="Daftar Proposal Permohonan"
                     columns={columns}
                     data={filteredItems}
                     subHeader

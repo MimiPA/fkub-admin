@@ -21,10 +21,13 @@ const pmptsp = [
         icon: "/icons/list-pengajuan",
         title: "Daftar Proposal Pemohon",
         main: true,
-        item: [
-            { title: "Bangun Baru", href: "/pmptsp/daftar_bangun_baru", active: "router.pathname.startsWith('/pmptsp/daftar_bangun_baru')" },
-            { title: "Renovasi", href: "/pmptsp/daftar_renovasi", active: "router.pathname.startsWith('/pmptsp/daftar_renovasi')" },
-        ],
+        href: "/pmptsp/daftar_pengajuan"
+    },
+    {
+        icon: "/icons/berkas-pendukung",
+        title: "Riwayat Surat KRK",
+        main: true,
+        href: "/pmptsp/riwayat_krk"
     },
 ];
 

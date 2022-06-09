@@ -12,40 +12,32 @@ import api from '../../services/api';
 const navItem = [
     {
         icon: "/icons/dashboard-icon",
-        title: "Dashboard",
+        title: "Beranda",
         href: "/",
         main: true,
         active: "router.pathname === '/'",
     },
     {
-        icon: "/icons/user-management-icon",
-        title: "User Management",
-        href: "/user",
-        main: true,
-        active: "router.pathname === '/'",
-    },
-    {
         icon: "/icons/pengajuan",
-        title: "List Proposal",
+        title: "Pengajuan Proposal",
+        href: "/pengajuan_proposal",
         main: true,
-        item: [
-            { title: "Bangun Baru", href: "/bangun_baru", active: "router.pathname.startsWith('/bangun_baru')" },
-            { title: "Renovasi", href: "/renovasi", active: "router.pathname.startsWith('/renovasi')" },
-        ],
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "List Pengajuan",
-        href: "/list_pengajuan",
+        title: "Riwayat Pengajuan",
         main: true,
-        active: "router.pathname.startsWith('/list_pengajuan')",
+        item: [
+            { title: "Bangun Baru", href: "/list_bangun_baru", active: "router.pathname.startsWith('/list_bangun_baru')" },
+            { title: "Renovasi", href: "/list_renovasi", active: "router.pathname.startsWith('/list_renovasi')" },
+        ],
     },
     {
         icon: "/icons/berkas-pendukung",
-        title: "Berkas Pendukung",
-        href: "/berkas_pendukung",
+        title: "Pendaftaran Pendukung",
+        href: "/pendaftaran_pendukung",
         main: true,
-        active: "router.pathname.startsWith('/berkas_pendukung')"
+        active: "router.pathname.startsWith('/pendaftaran_pendukung')"
     },
 ];
 
@@ -70,24 +62,6 @@ export default function Navbar() {
             });
         });
     }, []);
-
-    function MenuTerbatas() {
-        return (
-            navItem.map(({ icon, title, item, main, href, active }) => (
-                <NavLink
-                    icon={icon}
-                    title={title}
-                    key={title}
-                    hide={!open}
-                    item={item}
-                    main={main}
-                    href={href}
-                    active={active}
-                    setOpen={setOpen}
-                />
-            ))
-        );
-    }
 
     return (
         <>
@@ -165,7 +139,18 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                <MenuTerbatas />
+                {navItem.map(({ icon, title, item, main, href }) => (
+                    <NavLink
+                        icon={icon}
+                        title={title}
+                        key={title}
+                        hide={!open}
+                        item={item}
+                        main={main}
+                        href={href}
+                        setOpen={setOpen}
+                    />
+                ))}
             </nav>
         </>
     );
@@ -185,7 +170,7 @@ function ProfilePopover() {
     return (
         <Popover className="relative">
             <Popover.Button className="text-white font-bold cursor-pointer">
-                {state.user.nama_depan + ' '}
+                {state.user.nama_lengkap + ' '}
                 <span className='ml-4'>
                     <Image src="/icons/down-arrow.svg" alt="down-arrow Image" width="20" height="12" />
                 </span>
@@ -199,19 +184,12 @@ function ProfilePopover() {
                         </div>
 
                         <div className={`ml-2 font-semibold `}>
-                            <div className="">{state.user.nama_depan + ' ' + state.user.nama_belakang}</div>
-                            <Popover.Button>
-                                <Link href="/profile" passHref>
-                                    <a className="text-gray-500 text-md cursor-pointer hover:text-primary transition-colors duration-300 ease-in-out">
-                                        View Profile
-                                    </a>
-                                </Link>
-                            </Popover.Button>
+                            <div className="">{state.user.nik}</div>
                         </div>
                     </div>
                     <Popover.Button>
                         <Link href="/change-password" passHref>
-                            <a className="mt-2 py-4">Change Password</a>
+                            <a className="mt-2 py-4">Ubah Password</a>
                         </Link>
                     </Popover.Button>
                     <Popover.Button>

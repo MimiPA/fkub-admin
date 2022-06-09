@@ -19,7 +19,9 @@ const reducer = (state, action) => {
 const initialState = {
     isAuthenticated: false,
     user: {
+        nama_lengkap: null,
         nik: null,
+        email: null,
         nama_depan: null,
         nama_belakang: null,
         jenis_kelamin: null,
@@ -33,13 +35,7 @@ const initialState = {
         kelurahan: null,
         kecamatan: null,
         foto: null,
-        Master_account: {
-            id: null,
-            email: null,
-            Master_role: {
-                role: null,
-            }
-        },
+        role: null,
     },
 };
 

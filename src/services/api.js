@@ -2,7 +2,8 @@ import axios from "axios";
 import TokenService from './tokenServices';
 
 const instance = axios.create({
-    baseURL: 'https://fkub-service.herokuapp.com/api/',
+    baseURL: 'http://localhost:5000/api',
+    //baseURL: 'https://fkub-service.herokuapp.com/api',
     headers: {
         'Content-Type': 'application/json',
     },

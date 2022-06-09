@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Loader from '../../components/loader/Loader';
-import { date } from 'yup';
 import kecamatans from './kecamatan';
 import kelurahans from './kelurahan';
 
@@ -45,17 +44,17 @@ export default function RegisterView({
                     <img src='/icons/fkub-logo.svg' alt='fkub logo' className='w-64 md:w-72' />
                 </div>
                 <div className='login-section flex justify-between min-w-max items-center'>
-                    <p className='hidden lg:block font-medium text-sm mr-6'>Already have an account ?</p>
+                    <p className='hidden lg:block font-medium text-sm mr-6'>Sudah memiliki akun ?</p>
                     <Link href='/login'>
                         <button className="bg-secondary hover:bg-secondary-light text-white px-6 py-2 md:px-9 md:py-3 rounded-md font-bold text-base">
-                            Login
+                            Masuk
                         </button>
                     </Link>
                 </div>
             </header>
 
             <main className='register mt-12 md:mt-8 m-auto w-9/10 sm:w-7/10 md:w-5/10 lg:w-5/10 xl:w-5/10 2-xl:w-2/10'>
-                <h1 className='text-secondary text-4xl font-bold text-center mb-12'>Register</h1>
+                <h1 className='text-secondary text-4xl font-bold text-center mb-12'>Registrasi</h1>
                 <p className={`text-center ${Object.keys(serviceResponse).length ? serviceResponse.type : ''}`}>
                     {Object.keys(serviceResponse).length ? serviceResponse.message : ''}
                 </p>
@@ -67,13 +66,14 @@ export default function RegisterView({
 
                     <div className='input-container mb-4 flex flex-col'>
                         <div className='flex'>
-                            <img src='/icons/email.svg' className='bg-primary w-12 px-4 rounded-l-md' />
+                            <img src='/icons/nik.svg' className='bg-primary w-12 px-4 rounded-l-md' />
                             <input
                                 type='text'
-                                placeholder='Email'
-                                className={`bg-transparent h-12 w-full pl-6 rounded-r-md border-2 focus:outline-none ${errors.email ? 'border-error' : 'border-primary'}`} {...register('email')} />
+                                placeholder='Nomor Induk Kependudukan'
+                                className={`bg-transparent h-12 w-full pl-6 rounded-r-md border-2 focus:outline-none ${errors.nik ? 'border-error' : 'border-primary'}`} {...register('nik')}
+                            />
                         </div>
-                        <p className='text-xs text-error self-end mr-2 mt-1'>{errors.email?.message}</p>
+                        <p className='text-xs text-error self-end mr-2 mt-1'>{errors.nik?.message}</p>
                     </div>
 
                     <div className='input-container mb-4 flex flex-col'>
@@ -110,14 +110,13 @@ export default function RegisterView({
 
                     <div className='input-container mb-4 flex flex-col'>
                         <div className='flex'>
-                            <img src='/icons/nik.svg' className='bg-primary w-12 px-4 rounded-l-md' />
+                            <img src='/icons/email.svg' className='bg-primary w-12 px-4 rounded-l-md' />
                             <input
                                 type='text'
-                                placeholder='Nomor Induk Kependudukan'
-                                className={`bg-transparent h-12 w-full pl-6 rounded-r-md border-2 focus:outline-none ${errors.nik ? 'border-error' : 'border-primary'}`} {...register('nik')}
-                            />
+                                placeholder='Email'
+                                className={`bg-transparent h-12 w-full pl-6 rounded-r-md border-2 focus:outline-none ${errors.email ? 'border-error' : 'border-primary'}`} {...register('email')} />
                         </div>
-                        <p className='text-xs text-error self-end mr-2 mt-1'>{errors.nik?.message}</p>
+                        <p className='text-xs text-error self-end mr-2 mt-1'>{errors.email?.message}</p>
                     </div>
 
                     <div className='input-container mb-4 flex flex-col'>
@@ -150,12 +149,12 @@ export default function RegisterView({
                                     type="radio"
                                     value="Laki-laki"
                                     className='bg-primary h-5 mt-3' {...register('jenis_kelamin')} />
-                                <label className='text-lg mr-10'> Laki-laki</label>
+                                <label className='text-lg mr-10'>Laki-laki</label>
                                 <input
                                     type="radio"
                                     value="Perempuan"
                                     className='bg-primary h-5 mt-3 ml-10' {...register('jenis_kelamin')} />
-                                <label className='text-lg'> Perempuan</label>
+                                <label className='text-lg'>Perempuan</label>
                             </div>
                         </div>
                         <p className='text-xs text-error self-end mr-2 mt-1'>{errors.jenis_kelamin?.message}</p>

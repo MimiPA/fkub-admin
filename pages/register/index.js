@@ -20,7 +20,10 @@ export default function Register() {
     const [serviceResponse, setServiceResponse] = useState({});
 
     const validationSchema = Yup.object().shape({
-        email: Yup.string().required('Email harus di isi').email('Email tidak valid'),
+        nik: Yup.string()
+            .required('Nomor Induk Kependudukan perlu di isi')
+            .min(16, 'Jumlah NIK 16 angka')
+            .matches(/^[0-9]+$/i, 'NIK harus berupa angka'),
         password: Yup.string()
             .matches(/^((?!\s).)*$/, 'Password tidak boleh berisi spasi')
             .required('Password perlu di isi')
@@ -28,10 +31,7 @@ export default function Register() {
             .max(40, 'Password hanya bisa maksimal 40 karakter'),
         role: Yup.string()
             .required('Role user perlu di pilih'),
-        nik: Yup.string()
-            .required('Nomor Induk Kependudukan perlu di isi')
-            .min(16, 'Jumlah NIK 16 angka')
-            .matches(/^[0-9]+$/i, 'NIK harus berupa angka'),
+        email: Yup.string().required('Email harus di isi').email('Email tidak valid'),
         nama_depan: Yup.string()
             .required('Nama Depan perlu di isi')
             .matches(/^[a-z0-9]+$/i, 'Nama Depan harus karakter alphanumerik'),

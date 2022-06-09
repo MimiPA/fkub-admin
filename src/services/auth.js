@@ -33,10 +33,10 @@ const register = data => {
 };
 
 const login = async data => {
-    const { email, password, role } = data;
+    const { nik, password, role } = data;
 
     return axios.post(API_URL + '/login', {
-        email,
+        nik,
         password,
         role
     })
@@ -53,9 +53,9 @@ const login = async data => {
 
 const logout = async () => {
     const accessToken = TokenService.getLocalAccessToken();
-    const { data: { id } } = jwt.decode(accessToken);
+    const { data: { nik } } = jwt.decode(accessToken);
 
-    return api.post(API_URL + `/logout?id=${id}`).finally(() => {
+    return api.post(API_URL + `/logout?nik=${nik}`).finally(() => {
         Cookies.remove('accessTokenFKUBMain');
         Cookies.remove('refreshTokenFKUBMain');
     });

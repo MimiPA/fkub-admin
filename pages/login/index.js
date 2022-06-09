@@ -26,7 +26,10 @@ export default function Login() {
     const { dispatch } = useContext(AuthContext);
 
     const validationSchema = Yup.object().shape({
-        email: Yup.string().required('Email harus di isi').email('Email tidak valid'),
+        nik: Yup.string()
+            .required('Nomor Induk Kependudukan perlu di isi')
+            .min(16, 'Jumlah NIK 16 angka')
+            .matches(/^[0-9]+$/i, 'NIK harus berupa angka'),
         password: Yup.string().required('Password harus di isi').min(6, 'Password minimal paling sedikit 6 karakter'),
         role: Yup.string().required('Role user perlu di pilih'),
     });

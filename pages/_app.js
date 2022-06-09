@@ -13,7 +13,9 @@ function MyApp({ Component, pageProps, router }) {
     router.pathname.startsWith('/profile') ||
     router.pathname.startsWith('/user') ||
     router.pathname.startsWith('/bangun_baru') ||
-    router.pathname.startsWith('/renovasi') ||
+    router.pathname.startsWith('/pmptsp') ||
+    router.pathname.startsWith('/pmptsp/daftar_renovasi') ||
+    router.pathname.startsWith('/pmptsp/daftar_bangun_baru') ||
     router.pathname.startsWith('/list_pengajuan') ||
     router.pathname.startsWith('/berkas_pendukung')
   ) {

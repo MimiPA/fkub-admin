@@ -19,7 +19,7 @@ const pmptsp = [
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Daftar Pengajuan PMPTSP",
+        title: "Daftar Proposal Pemohon",
         main: true,
         item: [
             { title: "Bangun Baru", href: "/pmptsp/daftar_bangun_baru", active: "router.pathname.startsWith('/pmptsp/daftar_bangun_baru')" },

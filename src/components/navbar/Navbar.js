@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import AuthContext from '../providers/userProvider';
 import api from '../../services/api';
 
-const navItem = [
+const pmptsp = [
     {
         icon: "/icons/dashboard-icon",
         title: "Beranda",
@@ -18,26 +18,96 @@ const navItem = [
         active: "router.pathname === '/'",
     },
     {
-        icon: "/icons/pengajuan",
-        title: "Pengajuan Proposal",
-        href: "/pengajuan_proposal",
+        icon: "/icons/list-pengajuan",
+        title: "Daftar Pengajuan PMPTSP",
         main: true,
+        item: [
+            { title: "Bangun Baru", href: "/pmptsp/daftar_bangun_baru", active: "router.pathname.startsWith('/pmptsp/daftar_bangun_baru')" },
+            { title: "Renovasi", href: "/pmptsp/daftar_renovasi", active: "router.pathname.startsWith('/pmptsp/daftar_renovasi')" },
+        ],
+    },
+];
+
+const kemenag = [
+    {
+        icon: "/icons/dashboard-icon",
+        title: "Beranda",
+        href: "/",
+        main: true,
+        active: "router.pathname === '/'",
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Riwayat Pengajuan",
+        title: "Daftar Pengajuan Kemenag",
         main: true,
         item: [
-            { title: "Bangun Baru", href: "/list_bangun_baru", active: "router.pathname.startsWith('/list_bangun_baru')" },
-            { title: "Renovasi", href: "/list_renovasi", active: "router.pathname.startsWith('/list_renovasi')" },
+            { title: "Bangun Baru", href: "/kemenag/daftar_bangun_baru", active: "router.pathname.startsWith('/kemenag/daftar_bangun_baru')" },
+            { title: "Renovasi", href: "/kemenag/daftar_renovasi", active: "router.pathname.startsWith('/kemenag/daftar_renovasi')" },
         ],
     },
+];
+
+const fkub = [
     {
-        icon: "/icons/berkas-pendukung",
-        title: "Pendaftaran Pendukung",
-        href: "/pendaftaran_pendukung",
+        icon: "/icons/dashboard-icon",
+        title: "Beranda",
+        href: "/",
         main: true,
-        active: "router.pathname.startsWith('/pendaftaran_pendukung')"
+        active: "router.pathname === '/'",
+    },
+    {
+        icon: "/icons/list-pengajuan",
+        title: "Daftar Pengajuan FKUB",
+        main: true,
+        item: [
+            { title: "Bangun Baru", href: "/fkub/daftar_bangun_baru", active: "router.pathname.startsWith('/fkub/daftar_bangun_baru')" },
+            { title: "Renovasi", href: "/fkub/daftar_renovasi", active: "router.pathname.startsWith('/fkub/daftar_renovasi')" },
+        ],
+    },
+];
+
+const dtr = [
+    {
+        icon: "/icons/dashboard-icon",
+        title: "Beranda",
+        href: "/",
+        main: true,
+        active: "router.pathname === '/'",
+    },
+    {
+        icon: "/icons/list-pengajuan",
+        title: "Daftar Pengajuan DTR",
+        main: true,
+        item: [
+            { title: "Bangun Baru", href: "/dtr/daftar_bangun_baru", active: "router.pathname.startsWith('/dtr/daftar_bangun_baru')" },
+            { title: "Renovasi", href: "/dtr/daftar_renovasi", active: "router.pathname.startsWith('/dtr/daftar_renovasi')" },
+        ],
+    },
+];
+
+const admin = [
+    {
+        icon: "/icons/dashboard-icon",
+        title: "Beranda",
+        href: "/",
+        main: true,
+        active: "router.pathname === '/'",
+    },
+    {
+        icon: "/icons/user-management-icon",
+        title: "User Management",
+        main: true,
+        href: "/user"
+    },
+];
+
+const tambahan = [
+    {
+        icon: "/icons/dashboard-icon",
+        title: "Beranda",
+        href: "/",
+        main: true,
+        active: "router.pathname === '/'",
     },
 ];
 
@@ -62,6 +132,115 @@ export default function Navbar() {
             });
         });
     }, []);
+
+    const [item, setItem] = useState([]);
+    useEffect(() => {
+        const item = JSON.parse(localStorage.getItem('user'));
+        if (item) {
+            setItem(item);
+        }
+    }, []);
+
+    const Menu = () => {
+        if (item.role == "Admin") {
+            return (
+                admin.map(({ icon, title, item, main, href }) => (
+                    <NavLink
+                        icon={icon}
+                        title={title}
+                        key={title}
+                        hide={!open}
+                        item={item}
+                        main={main}
+                        href={href}
+                        setOpen={setOpen}
+                    />
+                ))
+            );
+        }
+        else if (item.role == "PMPTSP") {
+            return (
+                pmptsp.map(({ icon, title, item, main, href }) => (
+                    <NavLink
+                        icon={icon}
+                        title={title}
+                        key={title}
+                        hide={!open}
+                        item={item}
+                        main={main}
+                        href={href}
+                        setOpen={setOpen}
+                    />
+                ))
+            );
+        }
+        else if (item.role == "Kemenag") {
+            return (
+                kemenag.map(({ icon, title, item, main, href }) => (
+                    <NavLink
+                        icon={icon}
+                        title={title}
+                        key={title}
+                        hide={!open}
+                        item={item}
+                        main={main}
+                        href={href}
+                        setOpen={setOpen}
+                    />
+                ))
+            );
+        }
+        else if (item.role == "FKUB") {
+            return (
+                fkub.map(({ icon, title, item, main, href }) => (
+                    <NavLink
+                        icon={icon}
+                        title={title}
+                        key={title}
+                        hide={!open}
+                        item={item}
+                        main={main}
+                        href={href}
+                        setOpen={setOpen}
+                    />
+                ))
+            );
+        }
+        else if (item.role == "Dinas Tata Ruang") {
+            return (
+                dtr.map(({ icon, title, item, main, href }) => (
+                    <NavLink
+                        icon={icon}
+                        title={title}
+                        key={title}
+                        hide={!open}
+                        item={item}
+                        main={main}
+                        href={href}
+                        setOpen={setOpen}
+                    />
+                ))
+            );
+        }
+        else {
+            return (
+                tambahan.map(({ icon, title, item, main, href }) => (
+                    <NavLink
+                        icon={icon}
+                        title={title}
+                        key={title}
+                        hide={!open}
+                        item={item}
+                        main={main}
+                        href={href}
+                        setOpen={setOpen}
+                    />
+                ))
+            );
+        }
+    }
+
+
 
     return (
         <>
@@ -139,18 +318,7 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {navItem.map(({ icon, title, item, main, href }) => (
-                    <NavLink
-                        icon={icon}
-                        title={title}
-                        key={title}
-                        hide={!open}
-                        item={item}
-                        main={main}
-                        href={href}
-                        setOpen={setOpen}
-                    />
-                ))}
+                <Menu />
             </nav>
         </>
     );

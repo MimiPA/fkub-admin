@@ -19,7 +19,7 @@ const pmptsp = [
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Daftar Proposal Pemohon",
+        title: "Daftar Pengajuan",
         main: true,
         href: "/pmptsp/daftar_pengajuan"
     },
@@ -41,12 +41,15 @@ const kemenag = [
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Daftar Pengajuan Kemenag",
+        title: "Daftar Pengajuan",
         main: true,
-        item: [
-            { title: "Bangun Baru", href: "/kemenag/daftar_bangun_baru", active: "router.pathname.startsWith('/kemenag/daftar_bangun_baru')" },
-            { title: "Renovasi", href: "/kemenag/daftar_renovasi", active: "router.pathname.startsWith('/kemenag/daftar_renovasi')" },
-        ],
+        href: "/pmptsp/daftar_pengajuan"
+    },
+    {
+        icon: "/icons/berkas-pendukung",
+        title: "Riwayat Surat Rekomendasi",
+        main: true,
+        href: "/kemenag/riwayat_rekomendasi"
     },
 ];
 
@@ -60,12 +63,18 @@ const fkub = [
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Daftar Pengajuan FKUB",
+        title: "Daftar Pengajuan",
         main: true,
         item: [
             { title: "Bangun Baru", href: "/fkub/daftar_bangun_baru", active: "router.pathname.startsWith('/fkub/daftar_bangun_baru')" },
             { title: "Renovasi", href: "/fkub/daftar_renovasi", active: "router.pathname.startsWith('/fkub/daftar_renovasi')" },
         ],
+    },
+    {
+        icon: "/icons/berkas-pendukung",
+        title: "Riwayat Surat Rekomendasi",
+        main: true,
+        href: "/fkub/riwayat_rekomendasi"
     },
 ];
 
@@ -79,12 +88,15 @@ const dtr = [
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Daftar Pengajuan DTR",
+        title: "Penerbitan KRK",
         main: true,
-        item: [
-            { title: "Bangun Baru", href: "/dtr/daftar_bangun_baru", active: "router.pathname.startsWith('/dtr/daftar_bangun_baru')" },
-            { title: "Renovasi", href: "/dtr/daftar_renovasi", active: "router.pathname.startsWith('/dtr/daftar_renovasi')" },
-        ],
+        href: "/dtr/penerbitan_krk"
+    },
+    {
+        icon: "/icons/list-pengajuan",
+        title: "Penerbitan IMB",
+        main: true,
+        href: "/dtr/penerbitan_imb"
     },
 ];
 

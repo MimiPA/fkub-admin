@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps, router }) {
     router.pathname.startsWith('/kemenag') ||
     router.pathname.startsWith('/fkub') ||
     router.pathname.startsWith('/dtr') ||
+    router.pathname.startsWith('/dtr/penerbitan_krk') ||
     router.pathname.startsWith('/list_pengajuan') ||
     router.pathname.startsWith('/berkas_pendukung')
   ) {

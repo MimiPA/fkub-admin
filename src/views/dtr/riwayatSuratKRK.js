@@ -44,7 +44,7 @@ const columns = [
         grow: 0,
     },
     {
-        name: "Tanggal Permintaan",
+        name: "Tanggal Pemberian",
         selector: (row) => row.createdAt,
         format: (row) => moment(row.createdAt).format('LLL'),
         sortable: true,
@@ -75,17 +75,6 @@ const columns = [
             </Link>
         ),
     },
-    {
-        button: true,
-        cell: (row) => (
-            sessionStorage.removeItem('id_pengajuan'),
-            <Link href={`/dtr/penerbitan_krk/${row.id}`}>
-                <button className="w-[44px] h-[22px] border border-[#ADC6FF] rounded-sm bg-[#F0F5FF] hover:bg-[#ADC6FF] text-[#2F54EB] " onClick={sessionStorage.setItem('id_pengajuan', row.id_pengajuan)}>
-                    Detail
-                </button>
-            </Link >
-        ),
-    },
 ];
 
 const FilterComponent = ({ filterText, onFilter }) => (
@@ -109,7 +98,7 @@ export default function ListSuratKRK() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        api.get('/suratKRK/dtr/list').then(res => {
+        api.get('/suratKRK/dtr/riwayat').then(res => {
             setData(res.data.data);
             sessionStorage.removeItem('id_pengajuan');
         }).catch((err) => console.log(err));
@@ -120,7 +109,7 @@ export default function ListSuratKRK() {
     const filteredItems = data.filter(item =>
         item.Pengajuan.nama_tempat && item.Pengajuan.nama_tempat.toLowerCase().includes(filterText.toLowerCase()) ||
         item.Pengajuan.tempat_ibadah && item.Pengajuan.tempat_ibadah.toLowerCase().includes(filterText.toLowerCase()) ||
-        item.Pengajuan.jenis_pembangunan && item.Pengajuan.jenis_pembangunan.toLowerCase().includes(filterText.toLowerCase())
+        item.Pengajuan.alamat && item.Pengajuan.alamat.toLowerCase().includes(filterText.toLowerCase())
     );
 
     const subHeaderComponentMemo = React.useMemo(() => {
@@ -140,7 +129,7 @@ export default function ListSuratKRK() {
         <>
             <div>
                 <DataTable
-                    title="Riwayat Permintaan KRK"
+                    title="Riwayat Surat KRK"
                     columns={columns}
                     data={filteredItems}
                     subHeader

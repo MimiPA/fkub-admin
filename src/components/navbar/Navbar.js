@@ -93,10 +93,16 @@ const dtr = [
         href: "/dtr/penerbitan_krk"
     },
     {
-        icon: "/icons/list-pengajuan",
+        icon: "/icons/berkas-pendukung",
         title: "Penerbitan IMB",
         main: true,
         href: "/dtr/penerbitan_imb"
+    },
+    {
+        icon: "/icons/berkas-pendukung",
+        title: "Riwayat Surat KRK",
+        main: true,
+        href: "/dtr/riwayat_krk"
     },
 ];
 

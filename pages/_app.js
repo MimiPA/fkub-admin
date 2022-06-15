@@ -16,11 +16,12 @@ function MyApp({ Component, pageProps, router }) {
     router.pathname.startsWith('/pmptsp/daftar_pengajuan') ||
     router.pathname.startsWith('/pmptsp/riwayat_krk') ||
     router.pathname.startsWith('/kemenag') ||
+    router.pathname.startsWith('/kemenag/daftar_permohonan') ||
+    router.pathname.startsWith('/kemenag/daftar_permohonan/') ||
+    router.pathname.startsWith('/kemenag/riwayat_rekomendasi') ||
     router.pathname.startsWith('/fkub') ||
     router.pathname.startsWith('/dtr') ||
-    router.pathname.startsWith('/dtr/penerbitan_krk') ||
-    router.pathname.startsWith('/list_pengajuan') ||
-    router.pathname.startsWith('/berkas_pendukung')
+    router.pathname.startsWith('/dtr/penerbitan_krk')
   ) {
     return (
       <UserProvider>

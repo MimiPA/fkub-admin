@@ -338,7 +338,7 @@ export default function DetailView() {
                                         <form>
                                             <div className='input-container mb-6'>
                                                 <div className='flex flex-col'>
-                                                    <label className='text-primary font-bold' htmlFor='dokumen'>Surat KRK</label>
+                                                    <label className='text-primary font-bold' htmlFor='dokumen'>Surat KRK<span className="text-black font-normal"> (.pdf)</span></label>
                                                     <input
                                                         id='dokumen'
                                                         type='file'

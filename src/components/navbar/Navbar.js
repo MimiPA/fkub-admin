@@ -41,9 +41,9 @@ const kemenag = [
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Daftar Pengajuan",
+        title: "Daftar Permohonan",
         main: true,
-        href: "/pmptsp/daftar_pengajuan"
+        href: "/kemenag/daftar_permohonan"
     },
     {
         icon: "/icons/berkas-pendukung",

@@ -26,26 +26,51 @@ export default function DetailView() {
     }, []);
 
     const [data, setData] = useState({
-        id: 0,
-        referral_code: "",
-        jenis_pembangunan: "",
-        nama_tempat: "",
-        tempat_ibadah: "",
-        alamat: "",
-        surat_permohonan: "",
-        status: "",
-        idUser_create: "",
-        idUser_update: "",
-        createdAt: "",
-        updatedAt: "",
-        id_user: "",
-        Pengguna: {
-            nik: "",
-            nama_depan: "",
-            nama_belakang: "",
-            jenis_kelamin: "",
-            agama: "",
-            telepon: ""
+        dataSurat: {
+            id: 0,
+            dokumen: "",
+            kategori_dokumen: "",
+            idUser_create: "",
+            idUser_update: null,
+            createdAt: "",
+            updatedAt: "",
+            id_pengajuan: 0,
+            Pengajuan: {
+                id: 0,
+                referral_code: "",
+                jenis_pembangunan: "",
+                nama_tempat: "",
+                tempat_ibadah: "",
+                alamat: "",
+                rt: "",
+                rw: "",
+                surat_permohonan: "",
+                status: "",
+                idUser_create: "",
+                idUser_update: null,
+                createdAt: "",
+                updatedAt: "",
+                id_user: "",
+                Pengguna: {
+                    nik: "",
+                    email: "",
+                    nama_depan: "",
+                    nama_belakang: "",
+                    jenis_kelamin: "",
+                    agama: "",
+                    telepon: "",
+                }
+            }
+        },
+        dataSK: {
+            id: 0,
+            dokumen: "",
+            kategori_dokumen: "",
+            idUser_create: "",
+            idUser_update: null,
+            createdAt: "",
+            updatedAt: "",
+            id_pengajuan: 0
         }
     });
 
@@ -53,10 +78,10 @@ export default function DetailView() {
     const id = router.query.id;
 
     useEffect(() => {
-        api.get(`/proposal/pmptsp/list/detail/${id}`)
+        api.get(`/administrasi/kemenag/list/detail/${id}`)
             .then(res => {
                 setData(res.data.data);
-                return api.get(`/suratKRK/pmptsp/list/detail/${res.data.data.id}`)
+                return api.get(`/rekomendasi/kemenag/list/detail/${res.data.data.dataSurat.id_pengajuan}`)
             })
             .then(res => {
                 if (res.data.message == "Data Tidak Tersedia") {
@@ -73,48 +98,27 @@ export default function DetailView() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Terjadi Kesalahan',
-                    text: 'Detail Proposal Tidak Tersedia',
-                }).then(() => (window.location.href = '/'));
+                    text: 'Detail Permohonan Rekomendasi Tidak Tersedia',
+                }).then(() => (window.location.href = '/kemenag/daftar_permohonan'));
             });
     }, []);
 
     const [suratDokumen, setSuratDokumen] = useState("");
 
     const ButtonStatus = () => {
-        if (data.status == "Submit") {
+        if (suratDokumen == null || suratDokumen == undefined) {
             return (
                 <>
-                    <div className='flex justify-center pl-5 pt-5'>
+                    <div className='flex justify-start pl-5 pt-5'>
                         <p className='text-lg font-medium text-teal-600'>
-                            Apakah Anda Ingin Menyetujui / Menolak Pengajuan Pembangunan Rumah Ibadah Ini ?
+                            Setelah memeriksa data berikut, Dimohon untuk memberikan Surat Rekomendasi Kemenag
                         </p>
                     </div>
 
-                    <div className='flex justify-between items-start pl-5 pb-5 pt-2 pr-5'>
-                        <button type="button" onClick={changeTolak} className="w-[72px] h-[32px] border border-[#ffadad] rounded-sm bg-rose-500 hover:bg-[#ffadad] text-white text-lg font-semibold">
-                            Tolak
-                        </button>
-
+                    <div className='flex justify-start items-start pl-5 pb-5 pt-2 pr-5'>
                         <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
-                            Setuju
+                            Disini
                         </button>
-                    </div>
-                </>
-            );
-        }
-        else if (data.status == "Ditolak") {
-            return (
-                <>
-                    <div className='flex items-start pl-5 pt-5'>
-                        <p className='text-lg font-medium text-teal-600'>
-                            Status Proposal Saat Ini :
-                        </p>
-                    </div>
-
-                    <div className='flex items-start pl-5 pb-5'>
-                        <p className='text-xl font-bold text-black'>
-                            ~ ~ {data.status} ~ ~
-                        </p>
                     </div>
                 </>
             );
@@ -130,7 +134,7 @@ export default function DetailView() {
 
                     <div className='flex items-start pl-5 pb-5'>
                         <p className='text-xl font-bold text-black'>
-                            {data.status} ~ ~
+                            {data.dataSurat.Pengajuan.status} ~ ~
                         </p>
 
                         <Link href={suratDokumen}>
@@ -144,26 +148,6 @@ export default function DetailView() {
         }
     };
 
-    function changeTolak() {
-        api.post(`/proposal/pmptsp/list/detail/${data.id}/status?status=Ditolak`)
-            .then(res => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: res.data.message,
-                }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
-            })
-            .catch(err => {
-                console.log(err);
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Terjadi Kesalahan',
-                    text: 'Tidak Dapat Menolak. Mohon Coba Lagi.',
-                }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
-            });
-    }
-
     let [isOpen, setIsOpen] = useState(false);
 
     function closeModal() {
@@ -173,24 +157,24 @@ export default function DetailView() {
         setIsOpen(true);
     }
 
-    const [suratKRK, setSuratKRK] = useState(null);
+    const [suratRekomendasi, setSuratRekomendasi] = useState(null);
     const handleFileSelect = (event) => {
-        setSuratKRK(event.target.files[0]);
+        setSuratRekomendasi(event.target.files[0]);
     };
 
     function submit() {
         const setuju = new FormData();
-        setuju.append("dokumen", suratKRK);
-        setuju.append("kategori_dokumen", "Surat Pengajuan KRK");
+        setuju.append("dokumen", suratRekomendasi);
+        setuju.append("kategori_dokumen", "Surat Rekomendasi Kemenag");
         setuju.append("role", item.role);
 
-        api.post(`/proposal/pmptsp/list/detail/${data.id}/status?status=Proses`, setuju, { headers: { 'Content-Type': 'multipart/form-data', } })
+        api.post(`/rekomendasi/kemenag/upload`, setuju, { headers: { 'Content-Type': 'multipart/form-data', } })
             .then(res => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',
                     text: res.data.message,
-                }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
+                }).then(() => (window.location.href = '/kemenag/riwayat_rekomendasi'));
             })
             .catch(err => {
                 console.log(err);
@@ -208,20 +192,20 @@ export default function DetailView() {
             <div className="flex flex-col items-stretch md:pt-20 md:pl-20">
                 <div className="grid p-5 justify-items-stretch max-w-full">
                     <Head>
-                        <title>FKUB - Proposal Detail</title>
+                        <title>FKUB - Permohonan Detail</title>
                         <meta property="og:user-detail" content="user-detail" key="user-detail" />
                     </Head>
                     <main>
                         <div className="bg-[#E5E5E5] min-h-screen px-5 pt-5 ">
                             <div className="pl-4 mb-5">
                                 <Link href="/">Home </Link>/
-                                <Link href="/pmptsp/daftar_pengajuan">Daftar Proposal Pemohon</Link> / {""}
+                                <Link href="/dtr/penerbitan_krk">Daftar Permohonan Rekomendasi</Link> / {""}
                                 <Link href="/">
-                                    <span className="text-gray-400">Detail Proposal</span>
+                                    <span className="text-gray-400">Detail Permohonan</span>
                                 </Link>{""}
                             </div>
                             <h1 className='pl-4 mb-5 text-2xl md:text-3xl font-bold text-primary'>
-                                Detail Proposal Pemohon
+                                Detail Permohonan Rekomendasi
                             </h1>
 
                             <div className='pl-4 flex flex-col mb-5 pr-4'>
@@ -234,7 +218,7 @@ export default function DetailView() {
                                 <div className='bg-white rounded-xl shadow-md overflow-hidden basis-1/2'>
                                     <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
                                         <h3 className='text-xl font-semibold text-primary'>
-                                            Profil Pemohon
+                                            Profil Pemohon & SK Panitia Pembangunan
                                         </h3>
                                     </div>
                                     <div className='p-10 flex flex-col'>
@@ -243,7 +227,7 @@ export default function DetailView() {
                                                 Nomor Induk Kependudukan :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.Pengguna.nik}
+                                                {data.dataSurat.Pengajuan.Pengguna.nik}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -251,7 +235,7 @@ export default function DetailView() {
                                                 Nama Lengkap :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.Pengguna.nama_depan + ' ' + data.Pengguna.nama_belakang}
+                                                {data.dataSurat.Pengajuan.Pengguna.nama_depan + ' ' + data.dataSurat.Pengajuan.Pengguna.nama_belakang}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -259,7 +243,7 @@ export default function DetailView() {
                                                 Jenis Kelamin :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.Pengguna.jenis_kelamin}
+                                                {data.dataSurat.Pengajuan.Pengguna.jenis_kelamin}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -267,7 +251,7 @@ export default function DetailView() {
                                                 Agama :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.Pengguna.agama}
+                                                {data.dataSurat.Pengajuan.Pengguna.agama}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -275,7 +259,19 @@ export default function DetailView() {
                                                 Nomor Telepon :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.Pengguna.telepon}
+                                                {data.dataSurat.Pengajuan.Pengguna.telepon}
+                                            </p>
+                                        </div>
+                                        <div className="flex mb-3 md:mb-4">
+                                            <p className="text-md font-semibold text-gray-300">
+                                                SK Panitia Pembangunan :
+                                            </p>
+                                            <p className="text-md font-semibold text-gray-500 ml-2">
+                                                <Link href={data.dataSK.dokumen}>
+                                                    <button type="button" onClick={`window.open(${data.dataSK.dokumen}, '_blank')`}>
+                                                        <svg className='w-5 h-5' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M88 304H80V256H88C101.3 256 112 266.7 112 280C112 293.3 101.3 304 88 304zM192 256H200C208.8 256 216 263.2 216 272V336C216 344.8 208.8 352 200 352H192V256zM224 0V128C224 145.7 238.3 160 256 160H384V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64C0 28.65 28.65 0 64 0H224zM64 224C55.16 224 48 231.2 48 240V368C48 376.8 55.16 384 64 384C72.84 384 80 376.8 80 368V336H88C118.9 336 144 310.9 144 280C144 249.1 118.9 224 88 224H64zM160 368C160 376.8 167.2 384 176 384H200C226.5 384 248 362.5 248 336V272C248 245.5 226.5 224 200 224H176C167.2 224 160 231.2 160 240V368zM288 224C279.2 224 272 231.2 272 240V368C272 376.8 279.2 384 288 384C296.8 384 304 376.8 304 368V320H336C344.8 320 352 312.8 352 304C352 295.2 344.8 288 336 288H304V256H336C344.8 256 352 248.8 352 240C352 231.2 344.8 224 336 224H288zM256 0L384 128H256V0z" fill='salmon' /></svg>
+                                                    </button>
+                                                </Link>
                                             </p>
                                         </div>
                                     </div>
@@ -284,7 +280,7 @@ export default function DetailView() {
                                 <div className='bg-white rounded-xl shadow-md overflow-hidden basis-1/2'>
                                     <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
                                         <h3 className='text-xl font-semibold text-primary'>
-                                            Detail Permohonan
+                                            Detail Permohonan Surat Rekomendasi
                                         </h3>
                                     </div>
                                     <div className='p-10 flex flex-col'>
@@ -293,7 +289,7 @@ export default function DetailView() {
                                                 Jenis Tempat Ibadah :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.tempat_ibadah}
+                                                {data.dataSurat.Pengajuan.tempat_ibadah}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -301,7 +297,7 @@ export default function DetailView() {
                                                 Nama Tempat Ibadah :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.nama_tempat}
+                                                {data.dataSurat.Pengajuan.nama_tempat}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -309,7 +305,7 @@ export default function DetailView() {
                                                 Jenis Pembangunan :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.jenis_pembangunan}
+                                                {data.dataSurat.Pengajuan.jenis_pembangunan}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -317,7 +313,15 @@ export default function DetailView() {
                                                 Alamat :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.alamat}
+                                                {data.dataSurat.Pengajuan.alamat}
+                                            </p>
+                                        </div>
+                                        <div className="flex mb-3 md:mb-4">
+                                            <p className="text-md font-semibold text-gray-300">
+                                                RT / RW :
+                                            </p>
+                                            <p className="text-md font-semibold text-gray-500 ml-2">
+                                                {data.dataSurat.Pengajuan.rt + ' / ' + data.dataSurat.Pengajuan.rw}
                                             </p>
                                         </div>
                                         <div className="flex mb-3 md:mb-4">
@@ -325,8 +329,8 @@ export default function DetailView() {
                                                 Surat Permohonan :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                <Link href={data.surat_permohonan}>
-                                                    <button type="button" onClick={`window.open(${data.surat_permohonan}, '_blank')`}>
+                                                <Link href={data.dataSurat.dokumen}>
+                                                    <button type="button" onClick={`window.open(${data.dataSurat.dokumen}, '_blank')`}>
                                                         <svg className='w-5 h-5' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M88 304H80V256H88C101.3 256 112 266.7 112 280C112 293.3 101.3 304 88 304zM192 256H200C208.8 256 216 263.2 216 272V336C216 344.8 208.8 352 200 352H192V256zM224 0V128C224 145.7 238.3 160 256 160H384V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64C0 28.65 28.65 0 64 0H224zM64 224C55.16 224 48 231.2 48 240V368C48 376.8 55.16 384 64 384C72.84 384 80 376.8 80 368V336H88C118.9 336 144 310.9 144 280C144 249.1 118.9 224 88 224H64zM160 368C160 376.8 167.2 384 176 384H200C226.5 384 248 362.5 248 336V272C248 245.5 226.5 224 200 224H176C167.2 224 160 231.2 160 240V368zM288 224C279.2 224 272 231.2 272 240V368C272 376.8 279.2 384 288 384C296.8 384 304 376.8 304 368V320H336C344.8 320 352 312.8 352 304C352 295.2 344.8 288 336 288H304V256H336C344.8 256 352 248.8 352 240C352 231.2 344.8 224 336 224H288zM256 0L384 128H256V0z" fill='salmon' /></svg>
                                                     </button>
                                                 </Link>
@@ -337,7 +341,7 @@ export default function DetailView() {
                                                 Status :
                                             </p>
                                             <p className="text-md font-semibold text-gray-500 ml-2">
-                                                {data.status}
+                                                {data.dataSurat.Pengajuan.status}
                                             </p>
                                         </div>
                                     </div>
@@ -378,13 +382,13 @@ export default function DetailView() {
                                         as="h3"
                                         className="text-center text-lg font-medium leading-6 text-black"
                                     >
-                                        Menyetujui Pengajuan dan Meminta KRK ke Dinas Tata Ruang
+                                        Menyetujui Susunan Kepanitiaan, dan Memberikan Surat Rekomendasi
                                     </Dialog.Title>
                                     <div className="mt-4">
                                         <form>
                                             <div className='input-container mb-6'>
                                                 <div className='flex flex-col'>
-                                                    <label className='text-primary font-bold' htmlFor='dokumen'>Surat Permintaan KRK<span className="text-black font-normal"> (.pdf)</span></label>
+                                                    <label className='text-primary font-bold' htmlFor='dokumen'>Surat Rekomendasi Kemenag<span className="text-black font-normal"> (.pdf)</span></label>
                                                     <input
                                                         id='dokumen'
                                                         type='file'
@@ -412,7 +416,7 @@ export default function DetailView() {
                                             className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
                                             onClick={submit}
                                         >
-                                            Setuju
+                                            Memberikan
                                         </button>
                                     </div>
                                 </Dialog.Panel>

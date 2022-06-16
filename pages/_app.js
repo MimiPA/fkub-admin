@@ -21,7 +21,9 @@ function MyApp({ Component, pageProps, router }) {
     router.pathname.startsWith('/kemenag/riwayat_rekomendasi') ||
     router.pathname.startsWith('/fkub') ||
     router.pathname.startsWith('/dtr') ||
-    router.pathname.startsWith('/dtr/penerbitan_krk')
+    router.pathname.startsWith('/dtr/penerbitan_krk')||
+    router.pathname.startsWith('/dtr/riwayat_krk')||
+    router.pathname.startsWith('/dtr/riwayat_imb')
   ) {
     return (
       <UserProvider>

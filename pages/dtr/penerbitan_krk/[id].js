@@ -17,7 +17,6 @@ export async function getServerSideProps(ctx) {
 
 export default function DetailView() {
     const [item, setItem] = useState([]);
-    const [id_pengajuan, setID_pengajuan] = useState("");
     const [suratDokumen, setSuratDokumen] = useState("");
 
     useEffect(() => {

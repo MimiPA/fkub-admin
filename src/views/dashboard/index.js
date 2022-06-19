@@ -1,45 +1,264 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-//import Swal from 'sweetalert2';
-//import RiwayatPengajuan from './riwayatPengajuan';
+import { Agent } from 'https'
 
 import api from '../../services/api';
 
 export default function DashboardView() {
     const [item, setItem] = useState([]);
-    const [status, setStatus] = useState("");
+    const [count, setCount] = useState({});
 
     useEffect(() => {
         const item = JSON.parse(localStorage.getItem('user'));
         if (item) {
             setItem(item);
         }
+        if (item.role == "Admin") {
+            api.get(`/count/admin`)
+                .then(res => {
+                    setCount(res.data.data);
+                })
+                .catch(err => {
+                    setCount(0);
+                });
+        }
+        else if (item.role == "PMPTSP") {
+            api.get(`/count/pmptsp`)
+                .then(res => {
+                    setCount(res.data.data);
+                })
+                .catch(err => {
+                    setCount(0);
+                });
+        }
+        else if (item.role == "Dinas Tata Ruang") {
+            api.get(`/count/dtr`)
+                .then(res => {
+                    setCount(res.data.data);
+                })
+                .catch(err => {
+                    setCount(0);
+                });
+        }
+        else if (item.role == "Kemenag") {
+            api.get(`/count/kemenag`)
+                .then(res => {
+                    setCount(res.data.data);
+                })
+                .catch(err => {
+                    setCount(0);
+                });
+        }
     }, []);
 
-    const StatusTerkini = () => {
-        api.get(`/lacak/now`)
-            .then(res => {
-                setStatus(res.data.data.Pelacakan.kategori_pelacakan);
-            })
-            .catch((err) => {
-                setStatus(err.response.data.message)
-            });
 
-        return (
-            <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-600'>
-                <div className='flex items-start pl-5 pt-5'>
-                    <p className='text-lg font-medium text-teal-600'>
-                        Status Pengajuan Rumah Ibadah Anda saat ini :
-                    </p>
-                </div>
-                <div className='flex items-start pl-5 pb-5'>
-                    <p className='text-xl font-bold text-black'>
-                        {status}
-                    </p>
-                </div>
-            </div>
-        );
+    const Count = ({ role }) => {
+        if (role == "Admin") {
+            return (
+                <>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-sky-500'>
+                                Jumlah Pengguna
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahPengguna}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-rose-500'>
+                                Akun Aktif
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahEnable}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-teal-500'>
+                                Akun Tidak Aktif
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahDisable}
+                            </p>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+        else if (role == "PMPTSP") {
+            return (
+                <>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-sky-500'>
+                                Jumlah Pengajuan
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahPengajuan}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-rose-500'>
+                                Pengajuan Diproses
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahDiproses}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-teal-500'>
+                                Pengajuan Ditolak
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahDitolak}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-fuchsia-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-fuchsia-500'>
+                                Permintaan KRK
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahPermintaanKRK}
+                            </p>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+        else if (role == "Dinas Tata Ruang") {
+            return (
+                <>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-sky-500'>
+                                Pengajuan Diproses
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahDiproses}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-rose-500'>
+                                Permintaan KRK
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahPermintaanKRK}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-teal-500'>
+                                Penerbitan KRK
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahKRK}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-fuchsia-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-fuchsia-500'>
+                                Penerbitan IMB
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahIMB}
+                            </p>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+        else if (role == "Kemenag") {
+            return (
+                <>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-sky-500'>
+                                Pengajuan Diproses
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahDiproses}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-rose-500'>
+                                Permintaan Surat Rekomendasi
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahPermintaanRekomen}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-teal-500'>
+                                Penerbitan Surat Rekomendasi
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahRekomendasi}
+                            </p>
+                        </div>
+                    </div>
+                </>
+            );
+        }
+        else {
+            return (<>HAI</>);
+        }
     };
 
     return (
@@ -55,8 +274,8 @@ export default function DashboardView() {
                         Beranda
                     </h1>
 
-                    <div className='pl-4 flex flex-col mb-5'>
-                        <StatusTerkini />
+                    <div className='pl-4 flex flex-col gap-4 lg:flex-row md:flex-row mb-5'>
+                        <Count role={item.role} />
                     </div>
 
                     <div className='pl-4 flex flex-col gap-4 lg:flex-row md:flex-row'>
@@ -86,11 +305,11 @@ export default function DashboardView() {
                         <div className='bg-white rounded-xl shadow-md overflow-hidden basis-3/4'>
                             <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
                                 <h3 className='text-xl font-semibold text-primary'>
-                                    Riwayat Pelacakan Pengajuan Terkini
+                                    ?????
                                 </h3>
                             </div>
                             <div className='p-4 flex flex-col'>
-                                ???
+                                ?????
                             </div>
                         </div>
 

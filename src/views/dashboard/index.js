@@ -50,6 +50,15 @@ export default function DashboardView() {
                     setCount(0);
                 });
         }
+        else if (item.role == "FKUB") {
+            api.get(`/count/fkub`)
+                .then(res => {
+                    setCount(res.data.data);
+                })
+                .catch(err => {
+                    setCount(0);
+                });
+        }
     }, []);
 
 
@@ -256,8 +265,52 @@ export default function DashboardView() {
                 </>
             );
         }
+        else if (role == "FKUB") {
+            return (
+                <>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-rose-500'>
+                                Permintaan Surat Rekomendasi
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahPermintaanRekomen}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-teal-500'>
+                                Penerbitan Surat Rekomendasi
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahRekomendasi}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/3'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-sky-500'>
+                                Pengajuan Selesai
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahSelesai}
+                            </p>
+                        </div>
+                    </div>
+                </>
+            );
+        }
         else {
-            return (<>HAI</>);
+            return (<></>);
         }
     };
 

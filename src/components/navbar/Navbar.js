@@ -63,12 +63,9 @@ const fkub = [
     },
     {
         icon: "/icons/list-pengajuan",
-        title: "Daftar Pengajuan",
+        title: "Daftar Permohonan",
         main: true,
-        item: [
-            { title: "Bangun Baru", href: "/fkub/daftar_bangun_baru", active: "router.pathname.startsWith('/fkub/daftar_bangun_baru')" },
-            { title: "Renovasi", href: "/fkub/daftar_renovasi", active: "router.pathname.startsWith('/fkub/daftar_renovasi')" },
-        ],
+        href: "/fkub/daftar_permohonan",
     },
     {
         icon: "/icons/berkas-pendukung",

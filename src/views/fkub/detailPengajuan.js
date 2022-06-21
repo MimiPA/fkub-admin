@@ -1,11 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Swal from 'sweetalert2';
+import Head from "next/head";
+import Link from "next/link";
+import Swal from "sweetalert2";
+import Image from "next/image";
+
+import React, { useState, useEffect, Fragment } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
 
 import api from '../../services/api';
 import moment from 'moment';
 
 export default function DetailPengajuan({ id_pengajuan }) {
+    const [item, setItem] = useState([]);
+    const [suratDokumen, setSuratDokumen] = useState("");
+
+    useEffect(() => {
+        const item = JSON.parse(localStorage.getItem('user'));
+        if (item) {
+            setItem(item);
+        }
+    }, []);
+
     const [data, setData] = useState({
         id: 0,
         referral_code: "",
@@ -46,6 +60,15 @@ export default function DetailPengajuan({ id_pengajuan }) {
         api.get(`/proposal/fkub/list/detail/${id_pengajuan}`)
             .then(res => {
                 setData(res.data.data);
+                return api.get(`/rekomendasi/fkub/riwayat/detail/${id_pengajuan}`)
+            })
+            .then(res => {
+                if (res.data.message == "Data Tidak Tersedia") {
+                    setSuratDokumen(null);
+                }
+                else {
+                    setSuratDokumen(res.data.data.dokumen);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -59,8 +82,97 @@ export default function DetailPengajuan({ id_pengajuan }) {
             });
     }, []);
 
+    const ButtonStatus = () => {
+        if (suratDokumen == null || suratDokumen == undefined) {
+            return (
+                <>
+                    <div className='flex justify-start pl-5 pt-5'>
+                        <p className='text-lg font-medium text-teal-600'>
+                            Dimohon untuk memberikan Surat Rekomendasi FKUB
+                        </p>
+                    </div>
+
+                    <div className='flex justify-start items-start pl-5 pb-5 pt-2 pr-5'>
+                        <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
+                            Disini
+                        </button>
+                    </div>
+                </>
+            );
+        }
+        else {
+            return (
+                <>
+                    <div className='flex items-start pl-5 pt-5'>
+                        <p className='text-lg font-medium text-teal-600'>
+                            Status Pengajuan Saat Ini :
+                        </p>
+                    </div>
+
+                    <div className='flex items-start pl-5 pb-5'>
+                        <p className='text-xl font-bold text-black'>
+                            {data.status} ~ ~ Surat Rekomendasi :
+                        </p>
+
+                        <Link href={suratDokumen}>
+                            <button type="button" onClick={`window.open(${suratDokumen}, '_blank')`} className="ml-4">
+                                <svg className='w-7 h-7' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M88 304H80V256H88C101.3 256 112 266.7 112 280C112 293.3 101.3 304 88 304zM192 256H200C208.8 256 216 263.2 216 272V336C216 344.8 208.8 352 200 352H192V256zM224 0V128C224 145.7 238.3 160 256 160H384V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64C0 28.65 28.65 0 64 0H224zM64 224C55.16 224 48 231.2 48 240V368C48 376.8 55.16 384 64 384C72.84 384 80 376.8 80 368V336H88C118.9 336 144 310.9 144 280C144 249.1 118.9 224 88 224H64zM160 368C160 376.8 167.2 384 176 384H200C226.5 384 248 362.5 248 336V272C248 245.5 226.5 224 200 224H176C167.2 224 160 231.2 160 240V368zM288 224C279.2 224 272 231.2 272 240V368C272 376.8 279.2 384 288 384C296.8 384 304 376.8 304 368V320H336C344.8 320 352 312.8 352 304C352 295.2 344.8 288 336 288H304V256H336C344.8 256 352 248.8 352 240C352 231.2 344.8 224 336 224H288zM256 0L384 128H256V0z" fill='salmon' /></svg>
+                            </button>
+                        </Link>
+                    </div>
+                </>
+            );
+        }
+    };
+
+    let [isOpen, setIsOpen] = useState(false);
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    const [suratRekomendasi, setSuratRekomendasi] = useState(null);
+    const handleFileSelect = (event) => {
+        setSuratRekomendasi(event.target.files[0]);
+    };
+
+    function submit() {
+        const setuju = new FormData();
+        setuju.append("id_pengajuan", id_pengajuan);
+        setuju.append("dokumen", suratRekomendasi);
+        setuju.append("kategori_dokumen", "Surat Rekomendasi FKUB");
+        setuju.append("role", item.role);
+
+        api.post(`/rekomendasi/fkub/upload`, setuju, { headers: { 'Content-Type': 'multipart/form-data', } })
+            .then(res => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: res.data.message,
+                }).then(() => (window.location.href = '/fkub/riwayat_rekomendasi'));
+            })
+            .catch(err => {
+                console.log(err);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    text: err.response.data.message,
+                });
+            });
+    }
+
     return (
         <>
+            <div className='pl-4 flex flex-col mb-5 pr-4'>
+                <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-600'>
+                    <ButtonStatus />
+                </div>
+            </div>
+
             <div className='pl-4 flex flex-col gap-4 lg:flex-row md:flex-row'>
                 <div className='bg-white rounded-xl shadow-md overflow-hidden basis-1/2'>
                     <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
@@ -217,6 +329,80 @@ export default function DetailPengajuan({ id_pengajuan }) {
                     </div>
                 </div>
             </div>
+
+            <Transition appear show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-center text-lg font-medium leading-6 text-black"
+                                    >
+                                        Menyetujui Berkas Administrasi dan Memberikan Surat Rekomendasi
+                                    </Dialog.Title>
+                                    <div className="mt-4">
+                                        <form>
+                                            <div className='input-container mb-6'>
+                                                <div className='flex flex-col'>
+                                                    <label className='text-primary font-bold' htmlFor='dokumen'>Surat Rekomendasi FKUB<span className="text-black font-normal"> (.pdf)</span></label>
+                                                    <input
+                                                        id='dokumen'
+                                                        type='file'
+                                                        required
+                                                        name='dokumen'
+                                                        accept='.pdf'
+                                                        onChange={handleFileSelect}
+                                                        className={`shadow-md bg-transparent h-12 w-full pl-6 rounded-md border-2 focus:outline-none border-primary pt-1.5`} />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div className="flex justify-between mt-6">
+                                        <button
+                                            type="button"
+                                            className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+                                            onClick={closeModal}
+                                        >
+                                            Tutup
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                                            onClick={submit}
+                                        >
+                                            Memberikan
+                                        </button>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
         </>
     );
 }

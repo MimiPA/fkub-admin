@@ -42,6 +42,7 @@ const customStyles = {
 
 export default function DokumenPendukungList({ id_pengajuan }) {
     const [activeRow, setActiveRow] = useState({});
+
     const columns = [
         {
             name: 'No.',
@@ -178,9 +179,50 @@ export default function DokumenPendukungList({ id_pengajuan }) {
     }
 
     const onRowClicked = (row, event) => {
-        console.log("row", row);
         setActiveRow(row);
         setIsOpen(true);
+    }
+
+    function statusTerima() {
+        api
+            .put(`/proposal/fkub/dukungan/${activeRow.id}/status?status=Diterima`)
+            .then(res => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: res.data.message,
+                }).then(() => (window.location.reload()));
+            })
+            .catch(err => {
+                console.log(err);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    text: 'Tidak Dapat Mengubah Status. Mohon Coba Lagi.',
+                }).then(() => (window.location.href = '/fkub/daftar_permohonan'));
+            });
+    }
+
+    function statusTolak() {
+        api
+            .put(`/proposal/fkub/dukungan/${activeRow.id}/status?status=Ditolak`)
+            .then(res => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: res.data.message,
+                }).then(() => (window.location.reload()));
+            })
+            .catch(err => {
+                console.log(err);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    text: 'Tidak Dapat Mengubah Status. Mohon Coba Lagi.',
+                }).then(() => (window.location.href = '/fkub/daftar_permohonan'));
+            });
     }
 
     return (
@@ -243,7 +285,7 @@ export default function DokumenPendukungList({ id_pengajuan }) {
 
                                     <div className="mt-4">
                                         <p className="text-sm text-gray-500">
-                                            Apakah Anda Yakin Ingin Mengubah Status Pendukung User Berikut ? {activeRow.id}
+                                            Apakah Anda Yakin Ingin Mengubah Status Pendukung Pengguna Berikut ? {activeRow.id}
                                         </p>
                                     </div>
 
@@ -251,7 +293,7 @@ export default function DokumenPendukungList({ id_pengajuan }) {
                                         <button
                                             type="button"
                                             className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
+                                            onClick={statusTolak}
                                         >
                                             Tolak
                                         </button>
@@ -259,7 +301,7 @@ export default function DokumenPendukungList({ id_pengajuan }) {
                                         <button
                                             type="button"
                                             className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
+                                            onClick={statusTerima}
                                         >
                                             Terima
                                         </button>

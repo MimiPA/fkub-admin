@@ -35,7 +35,7 @@ export default function LoginView({
             </header>
 
             <main className='register mt-12 md:mt-8 m-auto w-9/10 sm:w-7/10 md:w-5/10 lg:w-5/10 xl:w-5/10 2-xl:w-2/10'>
-                <h1 className='text-secondary text-4xl font-bold text-center mb-12'>Selamat Datang Pengguna</h1>
+                <h1 className='text-secondary text-4xl font-bold text-center mb-12'>Selamat Datang Instansi</h1>
                 <p className='text-error text-center'>{errorService ? errorService : ''}</p>
 
                 <form className='mt-8 flex flex-col justify-between' onSubmit={handleSubmit(onSubmit)}>

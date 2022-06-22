@@ -1,20 +1,16 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
-import { Dialog, Transition } from '@headlessui/react';
 
 import { authPage } from '../../../src/middlewares/authorizationPage';
 
-import DetailPengajuan from "../../../src/views/fkub/detailPengajuan";
-import DokumenPemohonList from "../../../src/views/fkub/detailDokumenPemohon";
-import DokumenInstansiList from "../../../src/views/fkub/detailDokumenInstansi";
-import DokumenPendukungList from "../../../src/views/fkub/detailDokumenPendukung";
-import DokumenMasyarakatList from "../../../src/views/fkub/detailDokumenMasyarakat";
-import DokumenPenentangList from "../../../src/views/fkub/detailDokumenPenentang";
-
-import JumlahPendukung from "../../../src/views/fkub/jumlahPendukung";
+import DetailPengajuan from "../../../src/views/dtr/detailPengajuan";
+import DokumenPemohonList from "../../../src/views/dtr/detailDokumenPemohon";
+import DokumenInstansiList from "../../../src/views/dtr/detailDokumenInstansi";
+import DokumenPendukungList from "../../../src/views/dtr/detailDokumenPendukung";
+import DokumenMasyarakatList from "../../../src/views/dtr/detailDokumenMasyarakat";
 
 export async function getServerSideProps(ctx) {
     await authPage(ctx);
@@ -22,15 +18,6 @@ export async function getServerSideProps(ctx) {
 }
 
 export default function DetailView() {
-    const [item, setItem] = useState([]);
-
-    useEffect(() => {
-        const item = JSON.parse(localStorage.getItem('user'));
-        if (item) {
-            setItem(item);
-        }
-    }, []);
-
     const router = useRouter();
     const id_pengajuan = router.query.id;
 
@@ -45,8 +32,8 @@ export default function DetailView() {
                     <main>
                         <div className="bg-[#E5E5E5] h-auto px-5 py-5 ">
                             <div className="pl-4 mb-5">
-                                <Link href="/">Home </Link>/
-                                <Link href="/fkub/daftar_permohonan"> Daftar Permohonan</Link> / {""}
+                                <Link href="/">Beranda </Link>/
+                                <Link href="/dtr/penerbitan_imb"> Daftar Pengajuan</Link> / {""}
                                 <Link href="/">
                                     <span className="text-gray-400">Detail Pengajuan</span>
                                 </Link>{""}
@@ -77,10 +64,6 @@ export default function DetailView() {
                                 </div>
                             </div>
 
-                            <div className='pl-4 flex flex-col gap-4 lg:flex-row md:flex-row mt-5'>
-                                <JumlahPendukung id_pengajuan={id_pengajuan} />
-                            </div>
-
                             <div className='mt-5 pl-4 flex flex-col'>
                                 <div className='bg-white rounded-xl shadow-md overflow-hidden'>
                                     <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
@@ -100,16 +83,6 @@ export default function DetailView() {
                                         </h3>
                                     </div>
                                     <DokumenMasyarakatList id_pengajuan={id_pengajuan} />
-                                </div>
-                            </div>
-                            <div className='mt-5 pl-4 flex flex-col'>
-                                <div className='bg-white rounded-xl shadow-md overflow-hidden'>
-                                    <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
-                                        <h3 className='text-xl font-semibold text-primary'>
-                                            Daftar Penentang
-                                        </h3>
-                                    </div>
-                                    <DokumenPenentangList id_pengajuan={id_pengajuan} />
                                 </div>
                             </div>
                         </div>

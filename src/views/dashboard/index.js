@@ -268,7 +268,7 @@ export default function DashboardView() {
         else if (role == "FKUB") {
             return (
                 <>
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/3'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/4'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-rose-500'>
                                 Permintaan Surat Rekomendasi
@@ -281,7 +281,7 @@ export default function DashboardView() {
                         </div>
                     </div>
 
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/3'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/4'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-teal-500'>
                                 Penerbitan Surat Rekomendasi
@@ -294,7 +294,20 @@ export default function DashboardView() {
                         </div>
                     </div>
 
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/3'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-fuchsia-500 basis-1/4'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-fuchsia-500'>
+                                Pengajuan Diproses
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahDiproses}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/4'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-sky-500'>
                                 Pengajuan Selesai

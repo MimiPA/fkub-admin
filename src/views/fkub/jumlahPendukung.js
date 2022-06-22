@@ -11,7 +11,12 @@ export default function JumlahPendukung({ id_pengajuan }) {
     useEffect(() => {
         api.get(`/count/pengguna/${id_pengajuan}`)
             .then(res => {
-                setCountPengguna(res.data.data);
+                if (res.data.data == null || !res.data.data || res.data.data == undefined || res.data.data == 0) {
+                    setCountPengguna(0);
+                }
+                else {
+                    setCountPengguna(res.data.data);
+                }
                 return api.get(`/count/masyarakat/${id_pengajuan}`)
             })
             .then(res => {

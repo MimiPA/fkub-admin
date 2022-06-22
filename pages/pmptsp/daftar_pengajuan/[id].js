@@ -59,7 +59,7 @@ export default function DetailView() {
                 return api.get(`/suratKRK/pmptsp/list/detail/${res.data.data.id}`)
             })
             .then(res => {
-                if (res.data.message == "Data Tidak Tersedia") {
+                if (res.data.message == "Data Tidak Tersedia" || res.data.data == null || res.data.data == undefined || res.data.message == "Data Tidak Ditemukan") {
                     setSuratDokumen(null);
                 }
                 else {

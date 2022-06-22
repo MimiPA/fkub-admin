@@ -101,6 +101,12 @@ const dtr = [
         main: true,
         href: "/dtr/riwayat_krk"
     },
+    {
+        icon: "/icons/berkas-pendukung",
+        title: "Riwayat Surat IMB",
+        main: true,
+        href: "/dtr/riwayat_imb"
+    },
 ];
 
 const admin = [

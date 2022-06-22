@@ -63,7 +63,7 @@ export default function DetailView() {
                 return api.get(`/suratKRK/dtr/riwayat/detail/${res.data.data.id_pengajuan}`)
             })
             .then(res => {
-                if (res.data.message == "Data Tidak Tersedia") {
+                if (res.data.message == "Data Tidak Tersedia" || res.data.data == null || res.data.data == undefined || res.data.message == "Data Tidak Ditemukan") {
                     setSuratDokumen(null);
                 }
                 else {

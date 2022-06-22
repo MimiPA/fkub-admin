@@ -57,10 +57,10 @@ export default function DetailPengajuan({ id_pengajuan }) {
     });
 
     useEffect(() => {
-        api.get(`/proposal/fkub/list/detail/${id_pengajuan}`)
+        api.get(`/imb/dtr/list/detail/${id_pengajuan}`)
             .then(res => {
                 setData(res.data.data);
-                return api.get(`/rekomendasi/fkub/riwayat/detail/${id_pengajuan}`)
+                return api.get(`/imb/dtr/riwayat/detail/${id_pengajuan}`)
             })
             .then(res => {
                 if (res.data.message == "Data Tidak Tersedia" || res.data.data == null || res.data.data == undefined || res.data.message == "Data Tidak Ditemukan") {
@@ -78,7 +78,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
                     icon: 'error',
                     title: 'Terjadi Kesalahan',
                     text: 'Detail Pengajuan Tidak Tersedia',
-                }).then(() => (window.location.href = '/fkub/daftar_permohonan'));
+                }).then(() => (window.location.href = '/dtr/penerbitan_imb'));
             });
     }, []);
 
@@ -88,7 +88,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
                 <>
                     <div className='flex justify-start pl-5 pt-5'>
                         <p className='text-lg font-medium text-teal-600'>
-                            Dimohon untuk memberikan Surat Rekomendasi FKUB
+                            Dimohon untuk memberikan Surat IMB / PBG
                         </p>
                     </div>
 
@@ -111,7 +111,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
 
                     <div className='flex items-start pl-5 pb-5'>
                         <p className='text-xl font-bold text-black'>
-                            {data.status} ~ ~ Surat Rekomendasi :
+                            {data.status} ~ ~ Surat IMB/PBG :
                         </p>
 
                         <Link href={suratDokumen}>
@@ -134,25 +134,25 @@ export default function DetailPengajuan({ id_pengajuan }) {
         setIsOpen(true);
     }
 
-    const [suratRekomendasi, setSuratRekomendasi] = useState(null);
+    const [suratIMB, setSuratIMB] = useState(null);
     const handleFileSelect = (event) => {
-        setSuratRekomendasi(event.target.files[0]);
+        setSuratIMB(event.target.files[0]);
     };
 
     function submit() {
         const setuju = new FormData();
         setuju.append("id_pengajuan", id_pengajuan);
-        setuju.append("dokumen", suratRekomendasi);
-        setuju.append("kategori_dokumen", "Surat Rekomendasi FKUB");
+        setuju.append("dokumen", suratIMB);
+        setuju.append("kategori_dokumen", "IMB");
         setuju.append("role", item.role);
 
-        api.post(`/rekomendasi/fkub/upload`, setuju, { headers: { 'Content-Type': 'multipart/form-data', } })
+        api.post(`/imb/dtr/upload`, setuju, { headers: { 'Content-Type': 'multipart/form-data', } })
             .then(res => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Berhasil',
                     text: res.data.message,
-                }).then(() => (window.location.href = '/fkub/riwayat_rekomendasi'));
+                }).then(() => (window.location.href = '/dtr/riwayat_imb'));
             })
             .catch(err => {
                 console.log(err);
@@ -360,13 +360,13 @@ export default function DetailPengajuan({ id_pengajuan }) {
                                         as="h3"
                                         className="text-center text-lg font-medium leading-6 text-black"
                                     >
-                                        Menyetujui Berkas Administrasi dan Memberikan Surat Rekomendasi
+                                        Memberikan Surat IMB/PBG
                                     </Dialog.Title>
                                     <div className="mt-4">
                                         <form>
                                             <div className='input-container mb-6'>
                                                 <div className='flex flex-col'>
-                                                    <label className='text-primary font-bold' htmlFor='dokumen'>Surat Rekomendasi FKUB<span className="text-black font-normal"> (.pdf)</span></label>
+                                                    <label className='text-primary font-bold' htmlFor='dokumen'>Surat IMB/PBG<span className="text-black font-normal"> (.pdf)</span></label>
                                                     <input
                                                         id='dokumen'
                                                         type='file'

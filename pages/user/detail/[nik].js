@@ -7,6 +7,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from "next/router";
 import { Dialog, Transition } from '@headlessui/react';
 
+import Loader from '../../../src/components/loader/Loader';
 import api from '../../../src/services/api';
 import { authPage } from '../../../src/middlewares/authorizationPage';
 
@@ -16,6 +17,8 @@ export async function getServerSideProps(ctx) {
 }
 
 export default function DetailUser() {
+    const [isLoading, showLoader] = useState(false);
+
     const [data, setData] = useState({
         nama_lengkap: "",
         nik: "",
@@ -69,6 +72,7 @@ export default function DetailUser() {
     }
 
     function changeStatus() {
+        showLoader(true);
         api
             .put(`/user/admin/${nik}/status?status=${data.is_active}`)
             .then(res => {
@@ -87,6 +91,7 @@ export default function DetailUser() {
                     title: 'Terjadi Kesalahan',
                     text: 'Tidak Dapat Mengubah Status. Mohon Coba Lagi.',
                 }).then(() => (window.location.href = '/user/'));
+                showLoader(false);
             });
     }
 
@@ -334,23 +339,28 @@ export default function DetailUser() {
                                         </p>
                                     </div>
 
-                                    <div className="flex justify-between mt-6">
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Tidak
-                                        </button>
+                                    {isLoading ?
+                                        (<Loader />) :
+                                        (<>
+                                            <div className="flex justify-between mt-6">
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+                                                    onClick={closeModal}
+                                                >
+                                                    Tidak
+                                                </button>
 
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                                            onClick={changeStatus}
-                                        >
-                                            Yaa
-                                        </button>
-                                    </div>
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                                                    onClick={changeStatus}
+                                                >
+                                                    Yaa
+                                                </button>
+                                            </div>
+                                        </>)
+                                    }
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

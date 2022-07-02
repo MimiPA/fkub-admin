@@ -6,12 +6,15 @@ import Image from "next/image";
 import React, { useState, useEffect, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
+import Loader from '../../components/loader/Loader';
 import api from '../../services/api';
 import moment from 'moment';
 
 export default function DetailPengajuan({ id_pengajuan }) {
     const [item, setItem] = useState([]);
     const [suratDokumen, setSuratDokumen] = useState("");
+
+    const [isLoading, showLoader] = useState(false);
 
     useEffect(() => {
         const item = JSON.parse(localStorage.getItem('user'));
@@ -140,6 +143,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
     };
 
     function submit() {
+        showLoader(true);
         const setuju = new FormData();
         setuju.append("id_pengajuan", id_pengajuan);
         setuju.append("dokumen", suratRekomendasi);
@@ -162,6 +166,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
                     title: 'Terjadi Kesalahan',
                     text: err.response.data.message,
                 });
+                showLoader(false);
             });
     }
 
@@ -380,23 +385,28 @@ export default function DetailPengajuan({ id_pengajuan }) {
                                         </form>
                                     </div>
 
-                                    <div className="flex justify-between mt-6">
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Tutup
-                                        </button>
+                                    {isLoading ?
+                                        (<Loader />) :
+                                        (<>
+                                            <div className="flex justify-between mt-6">
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+                                                    onClick={closeModal}
+                                                >
+                                                    Tutup
+                                                </button>
 
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                                            onClick={submit}
-                                        >
-                                            Memberikan
-                                        </button>
-                                    </div>
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                                                    onClick={submit}
+                                                >
+                                                    Memberikan
+                                                </button>
+                                            </div>
+                                        </>)
+                                    }
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

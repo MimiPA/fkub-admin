@@ -7,6 +7,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from "next/router";
 import { Dialog, Transition } from '@headlessui/react';
 
+import Loader from '../../../src/components/loader/Loader';
 import api from '../../../src/services/api';
 import { authPage } from '../../../src/middlewares/authorizationPage';
 
@@ -18,6 +19,8 @@ export async function getServerSideProps(ctx) {
 export default function DetailView() {
     const [item, setItem] = useState([]);
     const [suratDokumen, setSuratDokumen] = useState("");
+
+    const [isLoading, showLoader] = useState(false);
 
     useEffect(() => {
         const item = JSON.parse(localStorage.getItem('user'));
@@ -183,6 +186,7 @@ export default function DetailView() {
     };
 
     function submit() {
+        showLoader(true);
         const setuju = new FormData();
         setuju.append("id_pengajuan", data.dataSurat.id_pengajuan);
         setuju.append("dokumen", suratRekomendasi);
@@ -205,6 +209,7 @@ export default function DetailView() {
                     title: 'Terjadi Kesalahan',
                     text: err.response.data.message,
                 });
+                showLoader(false);
             });
     }
 
@@ -217,10 +222,10 @@ export default function DetailView() {
                         <meta property="og:user-detail" content="user-detail" key="user-detail" />
                     </Head>
                     <main>
-                        <div className="bg-[#E5E5E5] min-h-screen px-5 pt-5 ">
+                        <div className="bg-[#E5E5E5] min-h-screen px-5 py-5">
                             <div className="pl-4 mb-5">
                                 <Link href="/">Home </Link>/
-                                <Link href="/dtr/penerbitan_krk">Daftar Permohonan Rekomendasi</Link> / {""}
+                                <Link href="/kemenag/daftar_permohonan">Daftar Permohonan Rekomendasi</Link> / {""}
                                 <Link href="/">
                                     <span className="text-gray-400">Detail Permohonan</span>
                                 </Link>{""}
@@ -417,23 +422,28 @@ export default function DetailView() {
                                         </form>
                                     </div>
 
-                                    <div className="flex justify-between mt-6">
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Tutup
-                                        </button>
+                                    {isLoading ?
+                                        (<Loader />) :
+                                        (<>
+                                            <div className="flex justify-between mt-6">
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+                                                    onClick={closeModal}
+                                                >
+                                                    Tutup
+                                                </button>
 
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                                            onClick={submit}
-                                        >
-                                            Memberikan
-                                        </button>
-                                    </div>
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                                                    onClick={submit}
+                                                >
+                                                    Memberikan
+                                                </button>
+                                            </div>
+                                        </>)
+                                    }
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

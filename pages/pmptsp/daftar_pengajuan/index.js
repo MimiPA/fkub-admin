@@ -19,7 +19,7 @@ export default function ListPengajuanProposal() {
                     </Head>
 
                     <main>
-                        <div className="bg-[#E5E5E5] min-h-screen px-5 pt-5 ">
+                        <div className="bg-[#E5E5E5] min-h-screen px-5 py-5">
                             <div className="pl-5 mb-5">
                                 <Link href="/">Beranda </Link>/
                                 <Link href="/pmptsp/daftar_pengajuan">

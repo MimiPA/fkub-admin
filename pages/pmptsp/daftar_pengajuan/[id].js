@@ -7,6 +7,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from "next/router";
 import { Dialog, Transition } from '@headlessui/react';
 
+import Loader from '../../../src/components/loader/Loader';
 import api from '../../../src/services/api';
 import { authPage } from '../../../src/middlewares/authorizationPage';
 
@@ -17,6 +18,8 @@ export async function getServerSideProps(ctx) {
 
 export default function DetailView() {
     const [item, setItem] = useState([]);
+
+    const [isLoading, showLoader] = useState(false);
 
     useEffect(() => {
         const item = JSON.parse(localStorage.getItem('user'));
@@ -90,15 +93,20 @@ export default function DetailView() {
                         </p>
                     </div>
 
-                    <div className='flex justify-between items-start pl-5 pb-5 pt-2 pr-5'>
-                        <button type="button" onClick={changeTolak} className="w-[72px] h-[32px] border border-[#ffadad] rounded-sm bg-rose-500 hover:bg-[#ffadad] text-white text-lg font-semibold">
-                            Tolak
-                        </button>
+                    {isLoading ?
+                        (<Loader />) :
+                        (<>
+                            <div className='flex justify-between items-start pl-5 pb-5 pt-2 pr-5'>
+                                <button type="button" onClick={changeTolak} className="w-[72px] h-[32px] border border-[#ffadad] rounded-sm bg-rose-500 hover:bg-[#ffadad] text-white text-lg font-semibold">
+                                    Tolak
+                                </button>
 
-                        <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
-                            Setuju
-                        </button>
-                    </div>
+                                <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
+                                    Setuju
+                                </button>
+                            </div>
+                        </>)
+                    }
                 </>
             );
         }
@@ -145,6 +153,7 @@ export default function DetailView() {
     };
 
     function changeTolak() {
+        showLoader(true);
         api.post(`/proposal/pmptsp/list/detail/${data.id}/status?status=Ditolak`)
             .then(res => {
                 Swal.fire({
@@ -161,6 +170,7 @@ export default function DetailView() {
                     title: 'Terjadi Kesalahan',
                     text: 'Tidak Dapat Menolak. Mohon Coba Lagi.',
                 }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
+                showLoader(false);
             });
     }
 
@@ -179,6 +189,7 @@ export default function DetailView() {
     };
 
     function submit() {
+        showLoader(true);
         const setuju = new FormData();
         setuju.append("dokumen", suratKRK);
         setuju.append("kategori_dokumen", "Surat Pengajuan KRK");
@@ -200,6 +211,7 @@ export default function DetailView() {
                     title: 'Terjadi Kesalahan',
                     text: err.response.data.message,
                 });
+                showLoader(false);
             });
     }
 
@@ -398,23 +410,28 @@ export default function DetailView() {
                                         </form>
                                     </div>
 
-                                    <div className="flex justify-between mt-6">
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
-                                        >
-                                            Tutup
-                                        </button>
+                                    {isLoading ?
+                                        (<Loader />) :
+                                        (<>
+                                            <div className="flex justify-between mt-6">
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-rose-100 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+                                                    onClick={closeModal}
+                                                >
+                                                    Tutup
+                                                </button>
 
-                                        <button
-                                            type="button"
-                                            className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                                            onClick={submit}
-                                        >
-                                            Setuju
-                                        </button>
-                                    </div>
+                                                <button
+                                                    type="button"
+                                                    className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                                                    onClick={submit}
+                                                >
+                                                    Setuju
+                                                </button>
+                                            </div>
+                                        </>)
+                                    }
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

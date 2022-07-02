@@ -78,7 +78,6 @@ const columns = [
     {
         button: true,
         cell: (row) => (
-            sessionStorage.removeItem('id_pengajuan'),
             <Link href={`/dtr/penerbitan_krk/${row.id}`}>
                 <button className="w-[44px] h-[22px] border border-[#ADC6FF] rounded-sm bg-[#F0F5FF] hover:bg-[#ADC6FF] text-[#2F54EB] " onClick={sessionStorage.setItem('id_pengajuan', row.id_pengajuan)}>
                     Detail

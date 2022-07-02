@@ -1,18 +1,18 @@
 import Cookies from 'js-cookie';
 
 const getLocalAccessToken = () => {
-    const accessToken = Cookies.get('accessTokenFKUBMain');
+    const accessToken = Cookies.get('accessTokenFKUBInstansi');
     return String(accessToken).split('').slice(1, -1).join('');
 };
 
 const getLocalRefreshToken = () => {
-    const refreshToken = Cookies.get('refreshTokenFKUBMain');
+    const refreshToken = Cookies.get('refreshTokenFKUBInstansi');
     return String(refreshToken).split('').slice(1, -1).join('');
 };
 
 const updateLocalAccessToken = token => {
     const inADay = 1;
-    Cookies.set('accessTokenFKUBMain', JSON.stringify(token), { expires: inADay });
+    Cookies.set('accessTokenFKUBInstansi', JSON.stringify(token), { expires: inADay });
 };
 
 const TokenService = {

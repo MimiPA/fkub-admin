@@ -50,7 +50,7 @@ export default function Login() {
         try {
             await AuthServices.login(data);
             await api.get('/profile').then(res => {
-                localStorage.setItem('user', JSON.stringify(res.data));
+                localStorage.setItem('instansi', JSON.stringify(res.data));
                 dispatch({
                     type: 'LOGIN',
                     payload: res.data,

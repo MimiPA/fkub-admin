@@ -24,7 +24,7 @@ const pmptsp = [
         href: "/pmptsp/daftar_pengajuan"
     },
     {
-        icon: "/icons/berkas-pendukung",
+        icon: "/icons/krk",
         title: "Riwayat Surat KRK",
         main: true,
         href: "/pmptsp/riwayat_krk"
@@ -46,7 +46,7 @@ const kemenag = [
         href: "/kemenag/daftar_permohonan"
     },
     {
-        icon: "/icons/berkas-pendukung",
+        icon: "/icons/surat-rekomendasi",
         title: "Riwayat Surat Rekomendasi",
         main: true,
         href: "/kemenag/riwayat_rekomendasi"
@@ -68,7 +68,7 @@ const fkub = [
         href: "/fkub/daftar_permohonan",
     },
     {
-        icon: "/icons/berkas-pendukung",
+        icon: "/icons/surat-rekomendasi",
         title: "Riwayat Surat Rekomendasi",
         main: true,
         href: "/fkub/riwayat_rekomendasi"
@@ -84,28 +84,22 @@ const dtr = [
         active: "router.pathname === '/'",
     },
     {
-        icon: "/icons/list-pengajuan",
-        title: "Penerbitan KRK",
+        icon: "/icons/krk",
+        title: "Surat KRK",
         main: true,
-        href: "/dtr/penerbitan_krk"
+        item: [
+            { title: "Permintaan KRK", href: "/dtr/penerbitan_krk" },
+            { title: "Riwayat KRK", href: "/dtr/riwayat_krk" },
+        ],
     },
     {
-        icon: "/icons/berkas-pendukung",
-        title: "Penerbitan IMB",
+        icon: "/icons/imb",
+        title: "Surat IMB",
         main: true,
-        href: "/dtr/penerbitan_imb"
-    },
-    {
-        icon: "/icons/berkas-pendukung",
-        title: "Riwayat Surat KRK",
-        main: true,
-        href: "/dtr/riwayat_krk"
-    },
-    {
-        icon: "/icons/berkas-pendukung",
-        title: "Riwayat Surat IMB",
-        main: true,
-        href: "/dtr/riwayat_imb"
+        item: [
+            { title: "Permintaan IMB", href: "/dtr/penerbitan_imb" },
+            { title: "Riwayat IMB", href: "/dtr/riwayat_imb" },
+        ],
     },
 ];
 
@@ -149,7 +143,7 @@ export default function Navbar() {
 
     useEffect(() => {
         api.get('/profile').then(res => {
-            localStorage.setItem('user', JSON.stringify(res.data));
+            localStorage.setItem('instansi', JSON.stringify(res.data));
             dispatch({
                 type: 'LOGIN',
                 payload: res.data,
@@ -159,7 +153,7 @@ export default function Navbar() {
 
     const [item, setItem] = useState([]);
     useEffect(() => {
-        const item = JSON.parse(localStorage.getItem('user'));
+        const item = JSON.parse(localStorage.getItem('instansi'));
         if (item) {
             setItem(item);
         }

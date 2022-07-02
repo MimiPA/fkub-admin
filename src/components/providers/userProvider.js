@@ -3,7 +3,7 @@ import React from 'react';
 const reducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
-            localStorage.setItem('user', JSON.stringify(action.payload));
+            localStorage.setItem('instansi', JSON.stringify(action.payload));
             return {
                 isAuthenticated: true,
                 user: action.payload,
@@ -43,8 +43,8 @@ var AuthContext = React.createContext();
 
 function getLocalStorage() {
     if (typeof window !== 'undefined') {
-        if (localStorage.getItem('user')) {
-            return { isAuthenticated: false, user: JSON.parse(localStorage.getItem('user')) };
+        if (localStorage.getItem('instansi')) {
+            return { isAuthenticated: false, user: JSON.parse(localStorage.getItem('instansi')) };
         }
         else {
             return initialState;

@@ -17,7 +17,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
     const [isLoading, showLoader] = useState(false);
 
     useEffect(() => {
-        const item = JSON.parse(localStorage.getItem('user'));
+        const item = JSON.parse(localStorage.getItem('instansi'));
         if (item) {
             setItem(item);
         }

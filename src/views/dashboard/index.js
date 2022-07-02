@@ -10,7 +10,7 @@ export default function DashboardView() {
     const [count, setCount] = useState({});
 
     useEffect(() => {
-        const item = JSON.parse(localStorage.getItem('user'));
+        const item = JSON.parse(localStorage.getItem('instansi'));
         if (item) {
             setItem(item);
         }

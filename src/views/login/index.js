@@ -82,7 +82,7 @@ export default function LoginView({
                 <div className='register-now flex mt-8 justify-center'>
                     <p className='text-gray-500 mr-2'>Pengguna Baru ?</p>
                     <Link href='/register'>
-                        <button className='text-secondary'>Registrasi Sekarang!</button>
+                        <button className='text-secondary font-semibold'>Registrasi Sekarang!</button>
                     </Link>
                 </div>
             </main>

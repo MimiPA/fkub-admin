@@ -3,8 +3,8 @@ import cookies from "next-cookies";
 //Middleware for Protected Pages
 export function authPage(ctx) {
     return new Promise(resolve => {
-        const { accessTokenFKUBMain, refreshTokenFKUBMain } = cookies(ctx);
-        if (!refreshTokenFKUBMain && !accessTokenFKUBMain) {
+        const { accessTokenFKUBInstansi, refreshTokenFKUBInstansi } = cookies(ctx);
+        if (!refreshTokenFKUBInstansi && !accessTokenFKUBInstansi) {
             return ctx.res
                 .writeHead(302, {
                     Location: '/login',
@@ -12,8 +12,8 @@ export function authPage(ctx) {
                 .end();
         }
         resolve({
-            accessTokenFKUBMain,
-            refreshTokenFKUBMain
+            accessTokenFKUBInstansi,
+            refreshTokenFKUBInstansi
         });
     });
 }
@@ -21,8 +21,8 @@ export function authPage(ctx) {
 //Middleware for Public Pages
 export function unauthPage(ctx) {
     return new Promise(resolve => {
-        const { refreshTokenFKUBMain } = cookies(ctx);
-        if (refreshTokenFKUBMain) {
+        const { refreshTokenFKUBInstansi } = cookies(ctx);
+        if (refreshTokenFKUBInstansi) {
             return ctx.res
                 .writeHead(302, {
                     Location: '/',

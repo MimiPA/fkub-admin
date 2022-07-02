@@ -43,8 +43,8 @@ const login = async data => {
         .then(res => {
             if (res.data.data) {
                 const inADay = 1;
-                Cookies.set('accessTokenFKUBMain', JSON.stringify(res.data.data.accessToken), { expires: inADay });
-                Cookies.set('refreshTokenFKUBMain', JSON.stringify(res.data.data.refreshToken), { expires: inADay });
+                Cookies.set('accessTokenFKUBInstansi', JSON.stringify(res.data.data.accessToken), { expires: inADay });
+                Cookies.set('refreshTokenFKUBInstansi', JSON.stringify(res.data.data.refreshToken), { expires: inADay });
             }
 
             return res.data;
@@ -56,8 +56,8 @@ const logout = async () => {
     const { data: { nik } } = jwt.decode(accessToken);
 
     return api.post(API_URL + `/logout?nik=${nik}`).finally(() => {
-        Cookies.remove('accessTokenFKUBMain');
-        Cookies.remove('refreshTokenFKUBMain');
+        Cookies.remove('accessTokenFKUBInstansi');
+        Cookies.remove('refreshTokenFKUBInstansi');
     });
 };
 

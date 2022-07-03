@@ -25,7 +25,7 @@ export default function DetailView() {
     const [item, setItem] = useState([]);
 
     useEffect(() => {
-        const item = JSON.parse(localStorage.getItem('user'));
+        const item = JSON.parse(localStorage.getItem('instansi'));
         if (item) {
             setItem(item);
         }

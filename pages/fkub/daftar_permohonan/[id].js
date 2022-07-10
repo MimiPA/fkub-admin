@@ -12,7 +12,6 @@ import DokumenPemohonList from "../../../src/views/fkub/detailDokumenPemohon";
 import DokumenInstansiList from "../../../src/views/fkub/detailDokumenInstansi";
 import DokumenPendukungList from "../../../src/views/fkub/detailDokumenPendukung";
 import DokumenMasyarakatList from "../../../src/views/fkub/detailDokumenMasyarakat";
-import DokumenPenentangList from "../../../src/views/fkub/detailDokumenPenentang";
 
 import JumlahPendukung from "../../../src/views/fkub/jumlahPendukung";
 
@@ -100,16 +99,6 @@ export default function DetailView() {
                                         </h3>
                                     </div>
                                     <DokumenMasyarakatList id_pengajuan={id_pengajuan} />
-                                </div>
-                            </div>
-                            <div className='mt-5 pl-4 flex flex-col'>
-                                <div className='bg-white rounded-xl shadow-md overflow-hidden'>
-                                    <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
-                                        <h3 className='text-xl font-semibold text-primary'>
-                                            Daftar Penentang
-                                        </h3>
-                                    </div>
-                                    <DokumenPenentangList id_pengajuan={id_pengajuan} />
                                 </div>
                             </div>
                         </div>

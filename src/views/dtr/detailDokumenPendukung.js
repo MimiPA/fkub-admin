@@ -174,8 +174,8 @@ export default function DokumenPendukungList({ id_pengajuan }) {
     const [filterText, setFilterText] = React.useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
     const filteredItems = data.filter(item =>
-        item.Pengguna.telepon && item.Pengguna.telepon.toLowerCase().includes(filterText.toLowerCase()) ||
-        item.Pengguna.nama_depan && item.Pengguna.nama_depan.toLowerCase().includes(filterText.toLowerCase()) ||
+        item.telepon && item.telepon.toLowerCase().includes(filterText.toLowerCase()) ||
+        item.nama_lengkap && item.nama_lengkap.toLowerCase().includes(filterText.toLowerCase()) ||
         item.createdAt && item.createdAt.toLowerCase().includes(filterText.toLowerCase())
     );
 

@@ -19,7 +19,6 @@ export default function LoginView({
     };
 
     const roles = [
-        'Admin',
         'PMPTSP',
         'FKUB',
         'Kemenag',

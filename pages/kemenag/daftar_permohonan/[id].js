@@ -134,13 +134,13 @@ export default function DetailView() {
                 <>
                     <div className='flex justify-start pl-5 pt-5'>
                         <p className='text-lg font-medium text-teal-600'>
-                            Setelah memeriksa data berikut, Dimohon untuk memberikan Surat Rekomendasi Kemenag
+                            Penerbitan Surat Rekomendasi Kemenag
                         </p>
                     </div>
 
                     <div className='flex justify-start items-start pl-5 pb-5 pt-2 pr-5'>
-                        <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
-                            Disini
+                        <button type="button" onClick={openModal} className="w-auto h-[32px] px-2 border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
+                            Menyetujui
                         </button>
                     </div>
                 </>
@@ -402,7 +402,7 @@ export default function DetailView() {
                                         as="h3"
                                         className="text-center text-lg font-medium leading-6 text-black"
                                     >
-                                        Menyetujui Susunan Kepanitiaan, dan Memberikan Surat Rekomendasi
+                                        Menyetujui Susunan Kepanitiaan, dan Menerbitkan Surat Rekomendasi
                                     </Dialog.Title>
                                     <div className="mt-4">
                                         <form>
@@ -439,7 +439,7 @@ export default function DetailView() {
                                                     className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
                                                     onClick={submit}
                                                 >
-                                                    Memberikan
+                                                    Menyetujui
                                                 </button>
                                             </div>
                                         </>)

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Agent } from 'https'
+
+import ListPermohonanPMPTSP from "../pmptsp/listPengajuan";
+import ListPermohonanIMB from "../dtr/listPermohonan";
+import ListPermohonanKemenag from "../kemenag/listPermohonan";
+import ListPermohonanFKUB from "../fkub/listPermohonan";
 
 import api from '../../services/api';
 
@@ -110,7 +113,7 @@ export default function DashboardView() {
         else if (role == "PMPTSP") {
             return (
                 <>
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/4'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/3'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-sky-500'>
                                 Jumlah Pengajuan
@@ -123,7 +126,7 @@ export default function DashboardView() {
                         </div>
                     </div>
 
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/4'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/3'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-rose-500'>
                                 Pengajuan Diproses
@@ -136,28 +139,15 @@ export default function DashboardView() {
                         </div>
                     </div>
 
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/4'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/3'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-teal-500'>
-                                Pengajuan Ditolak
+                                Pengajuan Selesai
                             </p>
                         </div>
                         <div className='flex items-start pl-5 pb-5'>
                             <p className='text-xl font-bold text-black'>
-                                {count.jumlahDitolak}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-fuchsia-500 basis-1/4'>
-                        <div className='flex items-start pl-5 pt-5'>
-                            <p className='text-lg font-medium text-fuchsia-500'>
-                                Permintaan KRK
-                            </p>
-                        </div>
-                        <div className='flex items-start pl-5 pb-5'>
-                            <p className='text-xl font-bold text-black'>
-                                {count.jumlahPermintaanKRK}
+                                {count.jumlahSelesai}
                             </p>
                         </div>
                     </div>
@@ -183,12 +173,12 @@ export default function DashboardView() {
                     <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/4'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-rose-500'>
-                                Permintaan KRK
+                                Pengajuan Selesai
                             </p>
                         </div>
                         <div className='flex items-start pl-5 pb-5'>
                             <p className='text-xl font-bold text-black'>
-                                {count.jumlahPermintaanKRK}
+                                {count.jumlahSelesai}
                             </p>
                         </div>
                     </div>
@@ -268,7 +258,7 @@ export default function DashboardView() {
         else if (role == "FKUB") {
             return (
                 <>
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/4'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-rose-500 basis-1/5'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-rose-500'>
                                 Permintaan Surat Rekomendasi
@@ -281,7 +271,7 @@ export default function DashboardView() {
                         </div>
                     </div>
 
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/4'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-teal-500 basis-1/5'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-teal-500'>
                                 Penerbitan Surat Rekomendasi
@@ -294,7 +284,7 @@ export default function DashboardView() {
                         </div>
                     </div>
 
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-fuchsia-500 basis-1/4'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-fuchsia-500 basis-1/5'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-fuchsia-500'>
                                 Pengajuan Diproses
@@ -307,7 +297,7 @@ export default function DashboardView() {
                         </div>
                     </div>
 
-                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/4'>
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-sky-500 basis-1/5'>
                         <div className='flex items-start pl-5 pt-5'>
                             <p className='text-lg font-medium text-sky-500'>
                                 Pengajuan Selesai
@@ -319,6 +309,19 @@ export default function DashboardView() {
                             </p>
                         </div>
                     </div>
+
+                    <div className='bg-white rounded-xl shadow-md overflow-hidden border-x-4 border-x-yellow-500 basis-1/5'>
+                        <div className='flex items-start pl-5 pt-5'>
+                            <p className='text-lg font-medium text-yellow-500'>
+                                Jumlah Pengguna
+                            </p>
+                        </div>
+                        <div className='flex items-start pl-5 pb-5'>
+                            <p className='text-xl font-bold text-black'>
+                                {count.jumlahPengguna}
+                            </p>
+                        </div>
+                    </div>
                 </>
             );
         }
@@ -327,10 +330,46 @@ export default function DashboardView() {
         }
     };
 
+    const Tabel = ({ role }) => {
+        if (role == "PMPTSP") {
+            return (
+                <>
+                    <ListPermohonanPMPTSP />
+                </>
+            );
+        }
+        else if (role == "Dinas Tata Ruang") {
+            return (
+                <>
+                    <ListPermohonanIMB />
+                </>
+            );
+        }
+        else if (role == "Kemenag") {
+            return (
+                <>
+                    <ListPermohonanKemenag />
+                </>
+            );
+        }
+        else if (role == "FKUB") {
+            return (
+                <>
+                    <ListPermohonanFKUB />
+                </>
+            );
+        }
+        else {
+            return (
+                <p>????</p>
+            );
+        }
+    };
+
     return (
         <>
             <main>
-                <div className="bg-[#E5E5E5] min-h-screen px-5 py-5 ">
+                <div className="bg-[#E5E5E5] min-h-screen px-5 py-5">
                     <div className="pl-4 mb-5">
                         <Link href="/">
                             <span className="text-gray-400">Beranda</span>
@@ -369,13 +408,10 @@ export default function DashboardView() {
                         </div>
 
                         <div className='bg-white rounded-xl shadow-md overflow-hidden basis-3/4'>
-                            <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
-                                <h3 className='text-xl font-semibold text-primary'>
-                                    ?????
-                                </h3>
-                            </div>
-                            <div className='p-4 flex flex-col'>
-                                ?????
+                            <div className="grid grid-cols-2">
+                                <div className="md-flex mx-auto rounded-xl shadow-md overflow-hidden w-full col-span-2">
+                                    <Tabel role={item.role} />
+                                </div>
                             </div>
                         </div>
 

@@ -62,6 +62,12 @@ const fkub = [
         active: "router.pathname === '/'",
     },
     {
+        icon: "/icons/user-management-icon",
+        title: "User Management",
+        main: true,
+        href: "/user"
+    },
+    {
         icon: "/icons/list-pengajuan",
         title: "Daftar Permohonan",
         main: true,
@@ -100,22 +106,6 @@ const dtr = [
             { title: "Permintaan IMB", href: "/dtr/penerbitan_imb" },
             { title: "Riwayat IMB", href: "/dtr/riwayat_imb" },
         ],
-    },
-];
-
-const admin = [
-    {
-        icon: "/icons/dashboard-icon",
-        title: "Beranda",
-        href: "/",
-        main: true,
-        active: "router.pathname === '/'",
-    },
-    {
-        icon: "/icons/user-management-icon",
-        title: "User Management",
-        main: true,
-        href: "/user"
     },
 ];
 
@@ -160,23 +150,7 @@ export default function Navbar() {
     }, []);
 
     const Menu = () => {
-        if (item.role == "Admin") {
-            return (
-                admin.map(({ icon, title, item, main, href }) => (
-                    <NavLink
-                        icon={icon}
-                        title={title}
-                        key={title}
-                        hide={!open}
-                        item={item}
-                        main={main}
-                        href={href}
-                        setOpen={setOpen}
-                    />
-                ))
-            );
-        }
-        else if (item.role == "PMPTSP") {
+        if (item.role == "PMPTSP") {
             return (
                 pmptsp.map(({ icon, title, item, main, href }) => (
                     <NavLink

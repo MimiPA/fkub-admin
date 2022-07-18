@@ -8,8 +8,15 @@ const customStyles = {
     header: {
         style: {
             fontSize: "24px",
-            fontWeight: 600,
+            fontWeight: 700,
+            fontFamily: "Bahnschrift SemiBold",
+            lineHeight: "32px",
             color: "rgba(249, 102, 58, 1)",
+            backgroundColor: "rgb(255 249 245)",
+            borderBottomStyle: 'solid',
+            borderBottomWidth: '1px',
+            borderBottomColor: "rgb(209 213 219)",
+            paddingLeft: "20px",
         },
     },
     headRow: {

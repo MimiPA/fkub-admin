@@ -91,13 +91,13 @@ export default function DetailPengajuan({ id_pengajuan }) {
                 <>
                     <div className='flex justify-start pl-5 pt-5'>
                         <p className='text-lg font-medium text-teal-600'>
-                            Dimohon untuk memberikan Surat IMB / PBG
+                            Penerbitan Surat IMB / PBG
                         </p>
                     </div>
 
                     <div className='flex justify-start items-start pl-5 pb-5 pt-2 pr-5'>
                         <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
-                            Disini
+                            Unggah
                         </button>
                     </div>
                 </>
@@ -365,7 +365,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
                                         as="h3"
                                         className="text-center text-lg font-medium leading-6 text-black"
                                     >
-                                        Memberikan Surat IMB/PBG
+                                        Menerbitkan Surat IMB/PBG
                                     </Dialog.Title>
                                     <div className="mt-4">
                                         <form>
@@ -402,7 +402,7 @@ export default function DetailPengajuan({ id_pengajuan }) {
                                                     className="rounded-md border border-transparent bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
                                                     onClick={submit}
                                                 >
-                                                    Memberikan
+                                                    Unggah
                                                 </button>
                                             </div>
                                         </>)

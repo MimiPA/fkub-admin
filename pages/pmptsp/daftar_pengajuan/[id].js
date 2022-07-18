@@ -87,9 +87,9 @@ export default function DetailView() {
         if (data.status == "Submit") {
             return (
                 <>
-                    <div className='flex justify-center pl-5 pt-5'>
+                    <div className='flex justify-start pl-5 pt-5'>
                         <p className='text-lg font-medium text-teal-600'>
-                            Apakah Anda Ingin Menyetujui / Menolak Pengajuan Pembangunan Rumah Ibadah Ini ?
+                            Menyetujui Pengajuan Pembangunan Rumah Ibadah ?
                         </p>
                     </div>
 
@@ -97,9 +97,9 @@ export default function DetailView() {
                         (<Loader />) :
                         (<>
                             <div className='flex justify-between items-start pl-5 pb-5 pt-2 pr-5'>
-                                <button type="button" onClick={changeTolak} className="w-[72px] h-[32px] border border-[#ffadad] rounded-sm bg-rose-500 hover:bg-[#ffadad] text-white text-lg font-semibold">
+                                {/* <button type="button" onClick={changeTolak} className="w-[72px] h-[32px] border border-[#ffadad] rounded-sm bg-rose-500 hover:bg-[#ffadad] text-white text-lg font-semibold">
                                     Tolak
-                                </button>
+                                </button> */}
 
                                 <button type="button" onClick={openModal} className="w-[72px] h-[32px] border border-[#adffbb] rounded-sm bg-emerald-500 hover:bg-[#adffbd] text-white text-lg font-semibold">
                                     Setuju
@@ -152,27 +152,27 @@ export default function DetailView() {
         }
     };
 
-    function changeTolak() {
-        showLoader(true);
-        api.post(`/proposal/pmptsp/list/detail/${data.id}/status?status=Ditolak`)
-            .then(res => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: res.data.message,
-                }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
-            })
-            .catch(err => {
-                console.log(err);
+    // function changeTolak() {
+    //     showLoader(true);
+    //     api.post(`/proposal/pmptsp/list/detail/${data.id}/status?status=Ditolak`)
+    //         .then(res => {
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'Berhasil',
+    //                 text: res.data.message,
+    //             }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
 
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Terjadi Kesalahan',
-                    text: 'Tidak Dapat Menolak. Mohon Coba Lagi.',
-                }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
-                showLoader(false);
-            });
-    }
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Terjadi Kesalahan',
+    //                 text: 'Tidak Dapat Menolak. Mohon Coba Lagi.',
+    //             }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
+    //             showLoader(false);
+    //         });
+    // }
 
     let [isOpen, setIsOpen] = useState(false);
 
@@ -201,7 +201,7 @@ export default function DetailView() {
                     icon: 'success',
                     title: 'Berhasil',
                     text: res.data.message,
-                }).then(() => (window.location.href = '/pmptsp/daftar_pengajuan'));
+                }).then(() => (window.location.href = '/pmptsp/riwayat_krk'));
             })
             .catch(err => {
                 console.log(err);

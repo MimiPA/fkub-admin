@@ -68,7 +68,7 @@ export default function DetailView() {
                                 <div className='bg-white rounded-xl shadow-md overflow-hidden'>
                                     <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
                                         <h3 className='text-xl font-semibold text-primary'>
-                                            Daftar Pendukung Pengguna
+                                            Daftar Pendukung Jemaat
                                         </h3>
                                     </div>
                                     <DokumenPendukungList id_pengajuan={id_pengajuan} />

@@ -9,8 +9,15 @@ const customStyles = {
     header: {
         style: {
             fontSize: "24px",
-            fontWeight: 600,
+            fontWeight: 900,
+            fontFamily: "Bahnschrift SemiBold",
+            lineHeight: "32px",
             color: "rgba(249, 102, 58, 1)",
+            backgroundColor: "rgb(255 249 245)",
+            borderBottomStyle: 'solid',
+            borderBottomWidth: '1px',
+            borderBottomColor: "rgb(209 213 219)",
+            paddingLeft: "20px",
         },
     },
     headRow: {
@@ -39,10 +46,9 @@ const customStyles = {
 const columns = [
     {
         name: 'No.',
-        selector: (row) => row.id,
+        selector: (row, index) => index + 1,
         sortable: true,
-        grow: 0,
-        maxWidth: "15px",
+        maxWidth: "7px",
     },
     {
         name: "Kategori Dokumen",
@@ -86,7 +92,7 @@ const FilterComponent = ({ filterText, onFilter }) => (
     </>
 );
 
-export default function DokumenPemohonList({id_pengajuan}) {
+export default function DokumenPemohonList({ id_pengajuan }) {
     const [data, setData] = useState([]);
 
     useEffect(() => {

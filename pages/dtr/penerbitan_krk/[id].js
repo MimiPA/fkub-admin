@@ -46,6 +46,14 @@ export default function DetailView() {
             tempat_ibadah: "",
             alamat: "",
             status: "",
+            Pengguna: {
+                nik: "",
+                nama_depan: "",
+                nama_belakang: "",
+                agama: "",
+                telepon: "",
+                jenis_kelamin: "",
+            },
         },
         Pengguna: {
             nik: "",
@@ -196,6 +204,58 @@ export default function DetailView() {
                                 </div>
                             </div>
 
+                            <div className='pl-4 flex flex-col gap-4 lg:flex-row md:flex-row mb-5'>
+                                <div className='bg-white rounded-xl shadow-md overflow-hidden basis-full'>
+                                    <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
+                                        <h3 className='text-xl font-semibold text-primary'>
+                                            Profil Pemohon
+                                        </h3>
+                                    </div>
+                                    <div className='p-10 flex flex-col'>
+                                        <div className="flex mb-3 md:mb-4">
+                                            <p className="text-md font-semibold text-gray-300">
+                                                Nomor Induk Kependudukan :
+                                            </p>
+                                            <p className="text-md font-semibold text-gray-500 ml-2">
+                                                {data.Pengajuan.Pengguna.nik}
+                                            </p>
+                                        </div>
+                                        <div className="flex mb-3 md:mb-4">
+                                            <p className="text-md font-semibold text-gray-300">
+                                                Nama Lengkap :
+                                            </p>
+                                            <p className="text-md font-semibold text-gray-500 ml-2">
+                                                {data.Pengajuan.Pengguna.nama_depan + ' ' + data.Pengajuan.Pengguna.nama_belakang}
+                                            </p>
+                                        </div>
+                                        <div className="flex mb-3 md:mb-4">
+                                            <p className="text-md font-semibold text-gray-300">
+                                                Jenis Kelamin :
+                                            </p>
+                                            <p className="text-md font-semibold text-gray-500 ml-2">
+                                                {data.Pengajuan.Pengguna.jenis_kelamin}
+                                            </p>
+                                        </div>
+                                        <div className="flex mb-3 md:mb-4">
+                                            <p className="text-md font-semibold text-gray-300">
+                                                Agama :
+                                            </p>
+                                            <p className="text-md font-semibold text-gray-500 ml-2">
+                                                {data.Pengajuan.Pengguna.agama}
+                                            </p>
+                                        </div>
+                                        <div className="flex mb-3 md:mb-4">
+                                            <p className="text-md font-semibold text-gray-300">
+                                                Nomor Telepon :
+                                            </p>
+                                            <p className="text-md font-semibold text-gray-500 ml-2">
+                                                {data.Pengajuan.Pengguna.telepon}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className='pl-4 flex flex-col gap-4 lg:flex-row md:flex-row'>
                                 <div className='bg-white rounded-xl shadow-md overflow-hidden basis-1/2'>
                                     <div className='flex items-start p-5 rounded-t border-b border-gray-300 bg-[#fff9f5]'>
@@ -301,6 +361,7 @@ export default function DetailView() {
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </main>
                 </div>

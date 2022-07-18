@@ -44,10 +44,15 @@ const customStyles = {
 
 const columns = [
     {
+        name: 'No.',
+        selector: (row, index) => index + 1,
+        sortable: true,
+        maxWidth: "7px",
+    },
+    {
         name: "NIK",
         selector: (row) => row.nik,
         sortable: true,
-        grow: 0,
     },
     {
         name: "Nama Lengkap",

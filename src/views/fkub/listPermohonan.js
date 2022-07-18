@@ -46,10 +46,9 @@ const customStyles = {
 const columns = [
     {
         name: 'No.',
-        selector: (row) => row.id,
+        selector: (row, index) => index + 1,
         sortable: true,
-        grow: 0,
-        maxWidth: "15px",
+        maxWidth: "7px",
     },
     {
         name: "Tanggal Pengajuan",

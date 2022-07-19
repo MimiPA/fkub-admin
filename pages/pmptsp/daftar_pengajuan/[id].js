@@ -35,6 +35,10 @@ export default function DetailView() {
         nama_tempat: "",
         tempat_ibadah: "",
         alamat: "",
+        rt: "",
+        rw: "",
+        kecamatan: "",
+        kelurahan: "",
         surat_permohonan: "",
         status: "",
         idUser_create: "",
@@ -84,7 +88,7 @@ export default function DetailView() {
     const [suratDokumen, setSuratDokumen] = useState("");
 
     const ButtonStatus = () => {
-        if (data.status == "Submit") {
+        if (data.status == "Pengajuan") {
             return (
                 <>
                     <div className='flex justify-start pl-5 pt-5'>

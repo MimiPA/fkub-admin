@@ -44,7 +44,7 @@ export default function DetailView() {
                     <main>
                         <div className="bg-[#E5E5E5] h-auto px-5 py-5 ">
                             <div className="pl-4 mb-5">
-                                <Link href="/">Home </Link>/
+                                <Link href="/">Beranda </Link>/
                                 <Link href="/fkub/daftar_permohonan"> Daftar Permohonan</Link> / {""}
                                 <Link href="/">
                                     <span className="text-gray-400">Detail Pengajuan</span>

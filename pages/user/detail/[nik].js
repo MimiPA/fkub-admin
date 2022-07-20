@@ -124,7 +124,7 @@ export default function DetailUser() {
                     <main>
                         <div className="bg-[#E5E5E5] min-h-screen px-5 pt-5 ">
                             <div className="pl-5 mb-5">
-                                <Link href="/">Home </Link>/ User Management / {""}
+                                <Link href="/">Beranda </Link>/ User Management / {""}
                                 <Link href="/user">User</Link> / {""}
                                 <Link href="/">
                                     <span className="text-gray-400">Detail User</span>
